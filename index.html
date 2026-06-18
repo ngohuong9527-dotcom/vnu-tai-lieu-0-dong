@@ -226,15 +226,15 @@
             <div class="login-links"><a onclick="switchAuthTab('register')">Chưa có tài khoản? Đăng ký</a></div>
         </div>
         <div class="modal-form" id="registerForm">
-            <div class="form-group"><label>Họ tên</label><input type="text" id="regName" placeholder="Nguyễn Văn A" /></div>
-            <div class="form-group"><label>Mã sinh viên</label><input type="text" id="regStudentId" placeholder="22000000" /></div>
-            <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="example@vnu.edu.vn" /></div>
+            <div class="form-group"><label>Họ tên <span class="required">*</span></label><input type="text" id="regName" placeholder="Nguyễn Văn A" /></div>
+            <div class="form-group"><label>Mã sinh viên <span class="required">*</span></label><input type="text" id="regStudentId" placeholder="22000000" /></div>
+            <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="regEmail" placeholder="example@vnu.edu.vn" /></div>
             <div class="form-group">
-                <label>Đơn vị</label>
-                <select id="regUniversity" onchange="updateRegFaculties()"><option value="">-- Chọn đơn vị --</option></select>
+                <label>Đơn vị <span class="required">*</span></label>
+                <select id="regUniversity"><option value="">-- Chọn đơn vị --</option></select>
             </div>
             <div class="form-group">
-                <label>Khoa/Viện</label>
+                <label>Khoa/Viện <span class="required">*</span></label>
                 <select id="regFaculty"><option value="">-- Chọn khoa --</option></select>
             </div>
             <div class="form-group">
@@ -245,8 +245,8 @@
                     <option value="K29">K29</option><option value="K30">K30</option>
                 </select>
             </div>
-            <div class="form-group"><label>Mật khẩu</label><input type="password" id="regPassword" placeholder="Ít nhất 6 ký tự" /></div>
-            <div class="form-group"><label>Xác nhận</label><input type="password" id="regConfirm" placeholder="Nhập lại mật khẩu" /></div>
+            <div class="form-group"><label>Mật khẩu <span class="required">*</span></label><input type="password" id="regPassword" placeholder="Ít nhất 6 ký tự" /></div>
+            <div class="form-group"><label>Xác nhận <span class="required">*</span></label><input type="password" id="regConfirm" placeholder="Nhập lại mật khẩu" /></div>
             <div class="form-group"><div class="checkbox-group"><input type="checkbox" id="regTerms" /><label for="regTerms">Tôi đồng ý với quy định</label></div></div>
             <div class="form-actions"><button class="btn btn-success" onclick="handleRegister()">Đăng ký</button></div>
             <div class="login-links"><a onclick="switchAuthTab('login')">Đã có tài khoản? Đăng nhập</a></div>
@@ -451,29 +451,9 @@ const vnuStructure = {
 const unitCodes = Object.keys(vnuStructure);
 
 // ============================================================
-// DỮ LIỆU MẪU – TÊN NGƯỜI DÙNG THẬT
+// DỮ LIỆU MẪU – TÀI LIỆU
 // ============================================================
-const sampleUsers = [
-    { name: 'Nguyễn Minh Anh', studentId: '22010001', email: 'anh.nguyen@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 45 },
-    { name: 'Trần Thị Bích Ngọc', studentId: '22020002', email: 'ngoc.tran@vnu.edu.vn', uni: 'ULIS', faculty: 'Tiếng Anh', cohort: 'K27', password: '123456', contributed: 38 },
-    { name: 'Lê Văn Hùng', studentId: '22030003', email: 'hung.le@vnu.edu.vn', uni: 'UEB', faculty: 'Kinh tế học', cohort: 'K26', password: '123456', contributed: 32 },
-    { name: 'Phạm Thị Thanh Hương', studentId: '22040004', email: 'huong.pham@vnu.edu.vn', uni: 'HUS', faculty: 'Toán - Cơ - Tin học', cohort: 'K28', password: '123456', contributed: 25 },
-    { name: 'Hoàng Văn Đức', studentId: '22050005', email: 'duc.hoang@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 20 },
-    { name: 'Bùi Thị Mai Lan', studentId: '22060006', email: 'lan.bui@vnu.edu.vn', uni: 'USSH', faculty: 'Tâm lý học', cohort: 'K29', password: '123456', contributed: 18 },
-    { name: 'Vũ Đình Quang', studentId: '22070007', email: 'quang.vu@vnu.edu.vn', uni: 'UL', faculty: 'Luật Dân sự', cohort: 'K27', password: '123456', contributed: 22 },
-    { name: 'Đặng Thị Thu Trang', studentId: '22080008', email: 'trang.dang@vnu.edu.vn', uni: 'UMP', faculty: 'Dược học', cohort: 'K28', password: '123456', contributed: 15 },
-    { name: 'Ngô Xuân Thành', studentId: '22090009', email: 'thanh.ngo@vnu.edu.vn', uni: 'UEd', faculty: 'Quản lý giáo dục', cohort: 'K27', password: '123456', contributed: 12 },
-    { name: 'Chu Thị Hồng Nhung', studentId: '22100010', email: 'nhung.chu@vnu.edu.vn', uni: 'IS', faculty: 'Quản trị Kinh doanh quốc tế', cohort: 'K26', password: '123456', contributed: 14 },
-    { name: 'Lý Thanh Hà', studentId: '22110011', email: 'ha.ly@vnu.edu.vn', uni: 'SIS', faculty: 'Khoa học liên ngành', cohort: 'K27', password: '123456', contributed: 10 },
-    { name: 'Nguyễn Thị Phương Thảo', studentId: '22120012', email: 'thao.nguyen@vnu.edu.vn', uni: 'HSB', faculty: 'Quản trị kinh doanh', cohort: 'K28', password: '123456', contributed: 8 },
-    { name: 'Trần Quốc Bảo', studentId: '22130013', email: 'bao.tran@vnu.edu.vn', uni: 'IFI', faculty: 'Khoa học máy tính', cohort: 'K27', password: '123456', contributed: 11 },
-    { name: 'Phạm Thu Huyền', studentId: '22140014', email: 'huyen.pham@vnu.edu.vn', uni: 'VJU', faculty: 'Công nghệ', cohort: 'K26', password: '123456', contributed: 9 }
-];
-
-// ============================================================
-// DỮ LIỆU TÀI LIỆU MẪU – TÊN TÁC GIẢ ĐẦY ĐỦ
-// ============================================================
-const sampleDocs = [
+const defaultDocs = [
     { id:1, title:'Slide Nhập môn AI - UET', uni:'UET', faculty:'Công nghệ Thông tin', subject:'Nhập môn AI', type:'PDF', desc:'Bài giảng chương 1-3 về AI cơ bản.', tags:'AI, lập trình', author:'Nguyễn Minh Anh', date:'2026-06-14', stars:4.8, ratings:42, downloads:1200 },
     { id:2, title:'Đề thi Xác suất - HUS', uni:'HUS', faculty:'Toán - Cơ - Tin học', subject:'Xác suất thống kê', type:'DOC', desc:'Đề thi cuối kỳ Xác suất thống kê năm 2025.', tags:'đề thi, xác suất', author:'Phạm Thị Thanh Hương', date:'2026-06-10', stars:4.6, ratings:28, downloads:850 },
     { id:3, title:'IELTS Writing Band 8+', uni:'ULIS', faculty:'Tiếng Anh', subject:'IELTS Academic', type:'PPT', desc:'Chiến thuật viết IELTS band 8+.', tags:'IELTS, writing', author:'Trần Thị Bích Ngọc', date:'2026-06-05', stars:4.9, ratings:56, downloads:2400 },
@@ -487,36 +467,50 @@ const sampleDocs = [
 ];
 
 // ============================================================
-// KHỞI TẠO LƯU TRỮ – TẠO ĐÁNH GIÁ MẪU
+// DỮ LIỆU MẪU – NGƯỜI DÙNG
+// ============================================================
+const defaultUsers = [
+    { name: 'Nguyễn Minh Anh', studentId: '22010001', email: 'anh.nguyen@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 45 },
+    { name: 'Trần Thị Bích Ngọc', studentId: '22020002', email: 'ngoc.tran@vnu.edu.vn', uni: 'ULIS', faculty: 'Tiếng Anh', cohort: 'K27', password: '123456', contributed: 38 },
+    { name: 'Lê Văn Hùng', studentId: '22030003', email: 'hung.le@vnu.edu.vn', uni: 'UEB', faculty: 'Kinh tế học', cohort: 'K26', password: '123456', contributed: 32 },
+    { name: 'Phạm Thị Thanh Hương', studentId: '22040004', email: 'huong.pham@vnu.edu.vn', uni: 'HUS', faculty: 'Toán - Cơ - Tin học', cohort: 'K28', password: '123456', contributed: 25 },
+    { name: 'Hoàng Văn Đức', studentId: '22050005', email: 'duc.hoang@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 20 },
+    { name: 'Bùi Thị Mai Lan', studentId: '22060006', email: 'lan.bui@vnu.edu.vn', uni: 'USSH', faculty: 'Tâm lý học', cohort: 'K29', password: '123456', contributed: 18 },
+    { name: 'Vũ Đình Quang', studentId: '22070007', email: 'quang.vu@vnu.edu.vn', uni: 'UL', faculty: 'Luật Dân sự', cohort: 'K27', password: '123456', contributed: 22 },
+    { name: 'Đặng Thị Thu Trang', studentId: '22080008', email: 'trang.dang@vnu.edu.vn', uni: 'UMP', faculty: 'Dược học', cohort: 'K28', password: '123456', contributed: 15 },
+    { name: 'Ngô Xuân Thành', studentId: '22090009', email: 'thanh.ngo@vnu.edu.vn', uni: 'UEd', faculty: 'Quản lý giáo dục', cohort: 'K27', password: '123456', contributed: 12 },
+    { name: 'Chu Thị Hồng Nhung', studentId: '22100010', email: 'nhung.chu@vnu.edu.vn', uni: 'IS', faculty: 'Quản trị Kinh doanh quốc tế', cohort: 'K26', password: '123456', contributed: 14 }
+];
+
+// ============================================================
+// DỮ LIỆU ĐÁNH GIÁ MẪU
+// ============================================================
+const defaultReviews = {};
+defaultDocs.forEach(doc => {
+    defaultReviews[doc.id] = [
+        { user: 'Nguyễn Minh Anh', rating: 5, text: 'Rất hữu ích, cảm ơn bạn!', date: '15/06/2026' },
+        { user: 'Trần Thị Bích Ngọc', rating: 4, text: 'Tài liệu chất lượng tốt.', date: '14/06/2026' },
+        { user: 'Lê Văn Hùng', rating: 5, text: 'Mong có thêm nhiều tài liệu hay hơn.', date: '13/06/2026' }
+    ];
+});
+
+// ============================================================
+// KHỞI TẠO LƯU TRỮ
 // ============================================================
 function initStorage() {
-    // Tạo dữ liệu đánh giá mẫu nếu chưa có
-    let existingReviews = JSON.parse(localStorage.getItem('vnu_reviews'));
-    if (!existingReviews || Object.keys(existingReviews).length === 0) {
-        const sampleReviews = {};
-        sampleDocs.forEach(doc => {
-            // Tạo 3 đánh giá mẫu cho mỗi tài liệu
-            const ratings = [];
-            for (let i = 0; i < 3; i++) {
-                const r = Math.floor(Math.random() * 2) + 4; // 4 hoặc 5 sao
-                ratings.push({
-                    user: sampleUsers[i % sampleUsers.length].name,
-                    rating: r,
-                    text: ['Rất hữu ích, cảm ơn bạn!', 'Tài liệu chất lượng tốt.', 'Mong có thêm nhiều tài liệu hay hơn.'][i],
-                    date: new Date(Date.now() - i * 86400000).toLocaleDateString('vi-VN')
-                });
-            }
-            sampleReviews[doc.id] = ratings;
-        });
-        localStorage.setItem('vnu_reviews', JSON.stringify(sampleReviews));
-    }
-
+    // Tài liệu
     if (!localStorage.getItem('vnu_docs')) {
-        localStorage.setItem('vnu_docs', JSON.stringify(sampleDocs));
+        localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
     }
+    // Người dùng
     if (!localStorage.getItem('vnu_users')) {
-        localStorage.setItem('vnu_users', JSON.stringify(sampleUsers));
+        localStorage.setItem('vnu_users', JSON.stringify(defaultUsers));
     }
+    // Đánh giá
+    if (!localStorage.getItem('vnu_reviews')) {
+        localStorage.setItem('vnu_reviews', JSON.stringify(defaultReviews));
+    }
+    // Người dùng hiện tại
     if (!localStorage.getItem('vnu_current_user')) {
         localStorage.removeItem('vnu_current_user');
     }
@@ -536,7 +530,6 @@ let currentUser = JSON.parse(localStorage.getItem('vnu_current_user')) || null;
 // ============================================================
 function getUniName(code) { return vnuStructure[code]?.name || code; }
 function getFaculties(code) { return vnuStructure[code]?.faculties || []; }
-function getAllUnits() { return unitCodes; }
 
 function showToast(msg, type='info') {
     const c = document.getElementById('toastContainer');
@@ -567,6 +560,7 @@ function formatNumber(n) {
 }
 
 function renderDocCards(list) {
+    if (!list || list.length===0) return '<p style="text-align:center;padding:40px;color:#94a3b8;">Không có tài liệu nào.</p>';
     return list.map(d => `
         <div class="doc-card" onclick="showDetail(${d.id})">
             <span class="badge ${d.type.toLowerCase()}">${d.type}</span>
@@ -600,7 +594,7 @@ function showPage(pageId) {
 }
 
 // ============================================================
-// ĐĂNG NHẬP / ĐĂNG KÝ
+// ĐĂNG NHẬP / ĐĂNG KÝ (ĐÃ SỬA LỖI)
 // ============================================================
 function openModal() { document.getElementById('authModal').classList.add('active'); switchAuthTab('login'); }
 function closeModal() { document.getElementById('authModal').classList.remove('active'); }
@@ -637,8 +631,9 @@ function populateUnitSelects() {
 }
 populateUnitSelects();
 
-function updateRegFaculties() {
-    const uni = document.getElementById('regUniversity').value;
+// Khi chọn đơn vị ở form đăng ký → cập nhật khoa
+document.getElementById('regUniversity').addEventListener('change', function() {
+    const uni = this.value;
     const sel = document.getElementById('regFaculty');
     sel.innerHTML = '<option value="">-- Chọn khoa --</option>';
     if (uni) {
@@ -649,7 +644,7 @@ function updateRegFaculties() {
             sel.appendChild(opt);
         });
     }
-}
+});
 
 function updateFilterFaculties() {
     const uni = document.getElementById('filterUni').value;
@@ -679,20 +674,7 @@ function updateContributeFaculties() {
     }
 }
 
-function handleLogin() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass = document.getElementById('loginPassword').value.trim();
-    if (!email || !pass) { showToast('Vui lòng nhập đầy đủ','error'); return; }
-    const user = users.find(u => (u.email===email || u.studentId===email) && u.password===pass);
-    if (!user) { showToast('Sai thông tin đăng nhập','error'); return; }
-    currentUser = user;
-    localStorage.setItem('vnu_current_user', JSON.stringify(user));
-    closeModal();
-    updateNavUI();
-    renderHome();
-    showToast('Chào mừng '+user.name+'!','success');
-}
-
+// === ĐĂNG KÝ (ĐÃ SỬA LỖI) ===
 function handleRegister() {
     const name = document.getElementById('regName').value.trim();
     const sid = document.getElementById('regStudentId').value.trim();
@@ -704,24 +686,67 @@ function handleRegister() {
     const confirm = document.getElementById('regConfirm').value;
     const terms = document.getElementById('regTerms').checked;
 
-    if (!name || !sid || !email || !uni || !faculty || !pass || !confirm) {
-        showToast('Vui lòng điền đầy đủ','error'); return;
+    // Kiểm tra từng trường
+    if (!name) { showToast('Vui lòng nhập họ tên','error'); return; }
+    if (!sid) { showToast('Vui lòng nhập mã sinh viên','error'); return; }
+    if (!email) { showToast('Vui lòng nhập email','error'); return; }
+    if (!uni) { showToast('Vui lòng chọn đơn vị','error'); return; }
+    if (!faculty) { showToast('Vui lòng chọn khoa','error'); return; }
+    if (pass.length < 6) { showToast('Mật khẩu phải có ít nhất 6 ký tự','error'); return; }
+    if (pass !== confirm) { showToast('Mật khẩu xác nhận không khớp','error'); return; }
+    if (!terms) { showToast('Vui lòng đồng ý với điều khoản','error'); return; }
+
+    // Kiểm tra trùng email hoặc mã SV
+    if (users.find(u => u.email === email)) {
+        showToast('Email đã được đăng ký','error');
+        return;
     }
-    if (pass.length<6) { showToast('Mật khẩu tối thiểu 6 ký tự','error'); return; }
-    if (pass!==confirm) { showToast('Mật khẩu xác nhận không khớp','error'); return; }
-    if (!terms) { showToast('Vui lòng đồng ý điều khoản','error'); return; }
-    if (users.find(u=>u.email===email || u.studentId===sid)) {
-        showToast('Email hoặc mã SV đã tồn tại','error'); return;
+    if (users.find(u => u.studentId === sid)) {
+        showToast('Mã sinh viên đã được đăng ký','error');
+        return;
     }
-    const newUser = { name, studentId:sid, email, uni, faculty, cohort, password:pass, contributed:0 };
+
+    // Tạo user mới
+    const newUser = {
+        name, studentId: sid, email,
+        uni, faculty, cohort,
+        password: pass,
+        contributed: 0
+    };
+
     users.push(newUser);
     localStorage.setItem('vnu_users', JSON.stringify(users));
+
+    // Tự động đăng nhập sau khi đăng ký
     currentUser = newUser;
     localStorage.setItem('vnu_current_user', JSON.stringify(newUser));
+
     closeModal();
     updateNavUI();
     renderHome();
-    showToast('Đăng ký thành công!','success');
+    showToast('🎉 Đăng ký thành công! Chào mừng ' + name, 'success');
+}
+
+// === ĐĂNG NHẬP ===
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value.trim();
+
+    if (!email) { showToast('Vui lòng nhập email hoặc mã SV','error'); return; }
+    if (!pass) { showToast('Vui lòng nhập mật khẩu','error'); return; }
+
+    const user = users.find(u => (u.email === email || u.studentId === email) && u.password === pass);
+    if (!user) {
+        showToast('Sai email/mã SV hoặc mật khẩu','error');
+        return;
+    }
+
+    currentUser = user;
+    localStorage.setItem('vnu_current_user', JSON.stringify(user));
+    closeModal();
+    updateNavUI();
+    renderHome();
+    showToast('Chào mừng ' + user.name + '!', 'success');
 }
 
 function handleLogout() {
@@ -729,7 +754,7 @@ function handleLogout() {
     localStorage.removeItem('vnu_current_user');
     updateNavUI();
     renderHome();
-    showToast('Đã đăng xuất','info');
+    showToast('Đã đăng xuất', 'info');
 }
 
 function updateNavUI() {
@@ -754,7 +779,6 @@ function renderHome() {
     document.getElementById('statUnis').textContent = unitCodes.length;
     document.getElementById('statUsers').textContent = users.length * 100 + 500;
 
-    // Môn học nổi bật – click được
     const subjectCount = {};
     docs.forEach(d => { subjectCount[d.subject] = (subjectCount[d.subject]||0)+1; });
     const topSubjects = Object.entries(subjectCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
@@ -770,7 +794,6 @@ function renderHome() {
         </div>`;
     }).join('');
 
-    // Tài liệu mới nhất
     const recent = [...docs].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4);
     document.getElementById('homeDocGrid').innerHTML = renderDocCards(recent);
 }
@@ -823,16 +846,13 @@ function resetFilters() {
 }
 
 // ============================================================
-// CHI TIẾT TÀI LIỆU – HIỂN THỊ ĐÁNH GIÁ ĐÚNG
+// CHI TIẾT TÀI LIỆU
 // ============================================================
 function showDetail(id) {
     const doc = docs.find(d=>d.id===id);
-    if (!doc) { showToast('Không tìm thấy','error'); return; }
+    if (!doc) { showToast('Không tìm thấy tài liệu','error'); return; }
     const container = document.getElementById('docDetailContainer');
     const docReviews = reviews[id] || [];
-
-    // Lấy số lượng đánh giá thực tế từ docReviews
-    const reviewCount = docReviews.length;
 
     container.innerHTML = `
         <div class="doc-title">${doc.title}</div>
@@ -846,7 +866,7 @@ function showDetail(id) {
         </div>
         <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
             <span style="font-size:20px;font-weight:700;">⭐ ${doc.stars.toFixed(1)}</span>
-            <span style="color:#64748b;">(${reviewCount} đánh giá)</span>
+            <span style="color:#64748b;">(${doc.ratings} đánh giá)</span>
         </div>
         <div class="doc-desc"><strong>📝 Mô tả:</strong> ${doc.desc || 'Chưa có mô tả'}</div>
         <div class="doc-actions">
@@ -863,7 +883,7 @@ function showDetail(id) {
                 <button class="btn btn-primary" onclick="submitReview(${doc.id})">📩 Gửi đánh giá</button>
             ` : `<p style="color:#64748b;font-size:14px;">Vui lòng <a href="#" onclick="openModal()" style="color:#2d7d9a;font-weight:600;">đăng nhập</a> để đánh giá.</p>`}
             <div class="review-list">
-                ${reviewCount > 0 ? docReviews.map(r => `
+                ${docReviews.length > 0 ? docReviews.map(r => `
                     <div class="review-item">
                         <div class="review-header">
                             <span class="name">${r.user}</span>
@@ -872,7 +892,7 @@ function showDetail(id) {
                         </div>
                         <div class="review-text">${r.text || 'Không có bình luận'}</div>
                     </div>
-                `).join('') : '<p style="color:#94a3b8;font-size:13px;padding:10px 0;">Chưa có đánh giá nào. Hãy là người đầu tiên đánh giá!</p>'}
+                `).join('') : '<p style="color:#94a3b8;font-size:13px;padding:10px 0;">Chưa có đánh giá nào.</p>'}
             </div>
         </div>
     `;
@@ -893,7 +913,6 @@ function submitReview(docId) {
     const text = document.getElementById('reviewText').value.trim();
 
     if (!reviews[docId]) reviews[docId] = [];
-
     reviews[docId].push({
         user: currentUser.name,
         rating: tempRating,
@@ -902,12 +921,11 @@ function submitReview(docId) {
     });
     localStorage.setItem('vnu_reviews', JSON.stringify(reviews));
 
-    // Cập nhật lại điểm trung bình và số lượng đánh giá từ dữ liệu mới
     const doc = docs.find(d=>d.id===docId);
     const allRatings = reviews[docId].map(r => r.rating);
     const avg = allRatings.reduce((a,b)=>a+b,0) / allRatings.length;
     doc.stars = Math.round(avg*10)/10;
-    doc.ratings = allRatings.length; // Cập nhật cả ratings để đồng bộ
+    doc.ratings = allRatings.length;
     localStorage.setItem('vnu_docs', JSON.stringify(docs));
 
     showToast('Cảm ơn bạn đã đánh giá!','success');
@@ -916,7 +934,7 @@ function submitReview(docId) {
 }
 
 function downloadDoc(id) {
-    if (!currentUser) { showToast('Vui lòng đăng nhập','error'); return; }
+    if (!currentUser) { showToast('Vui lòng đăng nhập để tải','error'); return; }
     const doc = docs.find(d=>d.id===id);
     if (!doc) return;
     doc.downloads += 1;
@@ -926,11 +944,11 @@ function downloadDoc(id) {
 }
 
 // ============================================================
-// ĐÓNG GÓP – THÊM MÔN HỌC MỚI
+// ĐÓNG GÓP
 // ============================================================
 function handleContribute(e) {
     e.preventDefault();
-    if (!currentUser) { showToast('Vui lòng đăng nhập','error'); return; }
+    if (!currentUser) { showToast('Vui lòng đăng nhập để đóng góp','error'); return; }
 
     const title = document.getElementById('docTitle').value.trim();
     const uni = document.getElementById('docUni').value;
@@ -972,7 +990,7 @@ function handleContribute(e) {
         localStorage.setItem('vnu_current_user', JSON.stringify(currentUser));
     }
 
-    showToast('📤 Gửi thành công! Đang chờ kiểm duyệt.','success');
+    showToast('📤 Gửi tài liệu thành công! Đang chờ kiểm duyệt.','success');
     resetContributeForm();
     renderHome();
     updateNavUI();
@@ -1032,7 +1050,7 @@ function renderLeaderboard() {
 updateNavUI();
 renderHome();
 renderLibrary(docs);
-console.log('✅ VNU Tài Liệu 0Đ (phiên bản sửa lỗi) đã sẵn sàng!');
+console.log('✅ VNU Tài Liệu 0Đ đã sẵn sàng!');
 console.log(`📚 ${docs.length} tài liệu, 🏛️ ${unitCodes.length} đơn vị, 👥 ${users.length} người dùng`);
 </script>
 </body>
