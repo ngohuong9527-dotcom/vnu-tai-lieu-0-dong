@@ -174,7 +174,7 @@
         .rules-box ul li { padding:4px 0; padding-left:24px; position:relative; }
         .rules-box ul li::before { content:"•"; color:#2d7d9a; font-weight:700; position:absolute; left:4px; }
 
-        .preview-content { background:#f8fafc; padding:20px; border-radius:8px; margin:10px 0; max-height:350px; overflow-y:auto; font-size:14px; color:#334155; border:1px solid #e9edf2; white-space:pre-wrap; }
+        .preview-content { background:#f8fafc; padding:20px; border-radius:8px; margin:10px 0; max-height:400px; overflow-y:auto; font-size:14px; color:#1e293b; border:1px solid #e9edf2; white-space:pre-wrap; line-height:1.8; }
         .preview-content .file-icon { font-size:48px; text-align:center; margin-bottom:12px; }
 
         @media (max-width:768px) {
@@ -251,13 +251,13 @@
 
     <!-- MODAL XEM TRƯỚC -->
     <div class="modal-overlay" id="previewModal">
-        <div class="modal-box" style="max-width:600px;">
+        <div class="modal-box" style="max-width:650px;">
             <button class="modal-close" onclick="closePreview()">✕</button>
             <h2 id="previewTitle">📄 Tên tài liệu</h2>
-            <div class="sub" id="previewMeta">Tác giả • Ngày đăng</div>
+            <div class="sub" id="previewMeta">Tác giả • Ngày đăng • Loại file</div>
             <div class="preview-content" id="previewContent">
                 <div class="file-icon" id="previewIcon">📄</div>
-                <div id="previewText">Nội dung xem trước sẽ hiển thị ở đây.</div>
+                <div id="previewText" style="font-family:'Courier New',monospace;font-size:14px;background:#f8fafc;padding:12px;border-radius:6px;">Nội dung xem trước sẽ hiển thị ở đây.</div>
             </div>
             <div class="form-actions">
                 <button class="btn btn-success" id="previewDownloadBtn" onclick="downloadFromPreview()">📥 Tải xuống (file .txt)</button>
@@ -377,7 +377,7 @@
             <section>
                 <div class="section-title" style="font-size:18px;">📌 Hướng dẫn sử dụng</div>
                 <div class="guide-step"><div class="num">1</div><div class="content"><h4>🔍 Tìm kiếm tài liệu</h4><p>Nhập từ khóa hoặc lọc theo Đơn vị → Khoa → loại file để tìm nhanh.</p></div></div>
-                <div class="guide-step"><div class="num">2</div><div class="content"><h4>👁️ Xem trước & Tải</h4><p>Click "Xem trước" để đọc nội dung, sau đó tải file .txt về máy.</p></div></div>
+                <div class="guide-step"><div class="num">2</div><div class="content"><h4>👁️ Xem trước & Tải</h4><p>Click "Xem trước" để đọc nội dung thật, sau đó tải file .txt về máy.</p></div></div>
                 <div class="guide-step"><div class="num">3</div><div class="content"><h4>📤 Đóng góp</h4><p>Điền đầy đủ thông tin (có thể thêm môn học mới) và upload file.</p></div></div>
                 <div class="guide-step"><div class="num">4</div><div class="content"><h4>⭐ Đánh giá</h4><p>Đánh giá sao và bình luận để giúp cộng đồng chọn tài liệu chất lượng.</p></div></div>
             </section>
@@ -408,9 +408,9 @@
     </footer>
 
     <script>
-        // =====================================================
+        // ============================================================
         // CẤU TRÚC ĐƠN VỊ
-        // =====================================================
+        // ============================================================
         const vnuStructure = {
             'UET': { name: 'ĐH Công nghệ', faculties: ['Công nghệ Thông tin', 'Điện tử - Viễn thông', 'Vật lý Kỹ thuật', 'Cơ học Kỹ thuật', 'Kỹ thuật Y sinh'] },
             'HUS': { name: 'ĐH Khoa học Tự nhiên', faculties: ['Toán - Cơ - Tin học', 'Vật lý', 'Hóa học', 'Sinh học', 'Địa chất', 'Môi trường', 'Công nghệ Sinh học'] },
@@ -428,9 +428,9 @@
         };
         const unitCodes = Object.keys(vnuStructure);
 
-        // =====================================================
-        // DỮ LIỆU MẪU (có preview đầy đủ)
-        // =====================================================
+        // ============================================================
+        // DỮ LIỆU MẪU – CÓ NỘI DUNG XEM TRƯỚC ĐẦY ĐỦ
+        // ============================================================
         const defaultDocs = [{
             id: 1,
             title: 'Slide Nhập môn AI - UET',
@@ -445,7 +445,30 @@
             stars: 4.8,
             ratings: 42,
             downloads: 1200,
-            preview: 'Nội dung slide chương 1: Giới thiệu về Trí tuệ nhân tạo.\n\n- Định nghĩa AI\n- Lịch sử phát triển\n- Các lĩnh vực ứng dụng: học máy, NLP, thị giác máy tính\n- Ví dụ: ChatGPT, xe tự lái'
+            preview: `CHƯƠNG 1: GIỚI THIỆU VỀ TRÍ TUỆ NHÂN TẠO
+
+1.1 Định nghĩa Trí tuệ nhân tạo (AI)
+AI là lĩnh vực khoa học máy tính nhằm tạo ra các hệ thống có khả năng thực hiện các tác vụ đòi hỏi trí tuệ của con người như học tập, suy luận, nhận dạng và ra quyết định.
+
+1.2 Lịch sử phát triển
+- 1950: Alan Turing đề xuất "Turing Test"
+- 1956: Hội nghị Dartmouth - thuật ngữ AI ra đời
+- 1960-70: Expert Systems
+- 1980-90: Machine Learning
+- 2010-nay: Deep Learning, ChatGPT, Generative AI
+
+1.3 Các lĩnh vực con của AI
+1. Học máy (Machine Learning): cho phép máy học từ dữ liệu
+2. Xử lý ngôn ngữ tự nhiên (NLP): ChatGPT, Google Translate
+3. Thị giác máy tính (Computer Vision): nhận dạng khuôn mặt, xe tự lái
+4. Robotics: Robot tự động, dây chuyền sản xuất
+
+1.4 Ứng dụng thực tế
+- Y tế: chẩn đoán bệnh từ ảnh X-quang
+- Tài chính: dự báo thị trường, phát hiện gian lận
+- Giáo dục: hệ thống học tập thích ứng
+- Giao thông: xe tự lái của Tesla, Google Waymo
+- Thương mại: đề xuất sản phẩm của Amazon, Netflix`
         }, {
             id: 2,
             title: 'Đề thi Xác suất - HUS',
@@ -460,7 +483,28 @@
             stars: 4.6,
             ratings: 28,
             downloads: 850,
-            preview: 'Đề thi Xác suất thống kê - Học kỳ 2 năm 2025\n\nThời gian: 90 phút\nGồm 5 câu hỏi lý thuyết và 3 bài tập tính toán.\n\nMột số câu hỏi mẫu:\n1. Trình bày công thức xác suất toàn phần và Bayes.\n2. Cho biến ngẫu nhiên X ~ N(0,1), tính P(X<1.96).\n3. Bài toán ước lượng khoảng tin cậy.'
+            preview: `ĐỀ THI CUỐI KỲ - XÁC SUẤT THỐNG KÊ
+Học kỳ 2 - Năm học 2025-2026
+Thời gian: 90 phút (không sử dụng tài liệu)
+
+PHẦN 1: LÝ THUYẾT (4 điểm)
+Câu 1: Trình bày công thức xác suất toàn phần và công thức Bayes. Cho ví dụ minh họa.
+Câu 2: Nêu định nghĩa biến ngẫu nhiên, phân loại và cho ví dụ.
+Câu 3: Thế nào là ước lượng điểm và ước lượng khoảng? Trình bày cách xây dựng khoảng tin cậy cho trung bình.
+
+PHẦN 2: BÀI TẬP (6 điểm)
+Câu 4: Một hộp có 6 bi trắng và 4 bi đen. Lấy ngẫu nhiên không hoàn lại 3 bi.
+a) Tính xác suất lấy được đúng 2 bi trắng.
+b) Tính xác suất lấy được ít nhất 1 bi trắng.
+
+Câu 5: Cho X ~ N(μ, σ^2) với n=25, x̄=52, s=8.
+a) Tìm khoảng tin cậy 95% cho μ.
+b) Với α=0.05, kiểm định giả thuyết H0: μ=50.
+
+Câu 6: Một nghiên cứu khảo sát 200 sinh viên về thói quen học tập...
+(Đề thi đầy đủ có trong file tải về)
+-------------------
+Chúc các bạn làm bài tốt!`
         }, {
             id: 3,
             title: 'IELTS Writing Band 8+',
@@ -468,14 +512,50 @@
             faculty: 'Tiếng Anh',
             subject: 'IELTS Academic',
             type: 'PPT',
-            desc: 'Chiến thuật viết IELTS band 8+.',
+            desc: 'Chiến thuật viết IELTS band 8+',
             tags: 'IELTS, writing',
             author: 'Trần Thị Bích Ngọc',
             date: '2026-06-05',
             stars: 4.9,
             ratings: 56,
             downloads: 2400,
-            preview: 'IELTS Writing Task 2 - Chiến thuật đạt 8.0\n\n1. Cấu trúc bài luận:\n- Mở bài: Paraphrase câu hỏi + nêu luận điểm\n- Thân bài: 2-3 đoạn, mỗi đoạn 1 luận điểm chính\n- Kết bài: Tóm tắt + khẳng định quan điểm\n\n2. Các dạng câu hỏi thường gặp:\n- Agree/Disagree\n- Discuss both views\n- Advantages/Disadvantages\n- Problem/Solution\n\n3. Từ vựng nâng cao và cấu trúc câu.'
+            preview: `IELTS WRITING TASK 2 - CHIẾN THUẬT ĐẠT BAND 8.0
+
+1. CẤU TRÚC BÀI LUẬN CHUẨN
++ Mở bài (Introduction) - 2 câu:
+  - Câu 1: Paraphrase lại đề bài
+  - Câu 2: Nêu quan điểm / thesis statement
+
++ Thân bài (Body) - 2-3 đoạn:
+  - Mỗi đoạn 1 luận điểm chính
+  - Sử dụng PEEL: Point - Evidence - Explanation - Link
+
++ Kết bài (Conclusion) - 1 câu:
+  - Tóm tắt lại quan điểm
+  - Không đưa thông tin mới
+
+2. CÁC DẠNG CÂU HỎI THƯỜNG GẶP
+- Agree / Disagree
+- Discuss both views and give your opinion
+- Advantages and Disadvantages
+- Problem and Solution
+- Two-part question
+
+3. TỪ VỰNG NÂNG CAO THEO CHỦ ĐỀ
+- Education: curriculum, pedagogy, tertiary education
+- Technology: innovation, automation, digital transformation
+- Environment: sustainable, carbon footprint, renewable
+- Health: wellbeing, healthcare system, epidemic
+- Society: inequality, urbanization, demographic
+
+4. CẤU TRÚC CÂU ĂN ĐIỂM
+- It is widely acknowledged that...
+- This essay will argue that...
+- From my perspective...
+- This is attributable to the fact that...
+- There is compelling evidence that...
+- In light of the above arguments...
+`
         }, {
             id: 4,
             title: 'Giáo trình Kinh tế vi mô - UEB',
@@ -490,7 +570,33 @@
             stars: 4.7,
             ratings: 35,
             downloads: 1800,
-            preview: 'Giáo trình Kinh tế vi mô - Chương 1: Nhập môn\n\n1.1 Đối tượng và phương pháp nghiên cứu\n1.2 Cung cầu và cơ chế thị trường\n1.3 Hành vi người tiêu dùng\n1.4 Hành vi nhà sản xuất\n1.5 Cạnh tranh và độc quyền'
+            preview: `GIÁO TRÌNH KINH TẾ VI MÔ - Chương 1
+
+1.1 ĐỐI TƯỢNG VÀ PHƯƠNG PHÁP NGHIÊN CỨU
+Kinh tế vi mô nghiên cứu hành vi của các tác nhân kinh tế: người tiêu dùng, doanh nghiệp, chính phủ.
+Phương pháp: phân tích cận biên, mô hình hóa, thực nghiệm.
+
+1.2 CUNG - CẦU VÀ CƠ CHẾ THỊ TRƯỜNG
+- Luật cầu: giá tăng → lượng cầu giảm (và ngược lại)
+- Luật cung: giá tăng → lượng cung tăng (và ngược lại)
+- Điểm cân bằng: Qd = Qs
+
+1.3 HÀNH VI NGƯỜI TIÊU DÙNG
+- Lý thuyết hữu dụng: tổng hữu dụng (TU) và hữu dụng biên (MU)
+- Đường bàng quan và đường ngân sách
+- Nguyên tắc tối đa hóa hữu dụng: MUx/Px = MUy/Py
+
+1.4 HÀNH VI NHÀ SẢN XUẤT
+- Hàm sản xuất: Q = f(K, L)
+- Năng suất biên của lao động: MPL = ΔQ/ΔL
+- Chi phí: TC = FC + VC, AC = TC/Q, MC = ΔTC/ΔQ
+
+1.5 CẤU TRÚC THỊ TRƯỜNG
+- Cạnh tranh hoàn hảo: P = MC
+- Độc quyền: P > MC
+- Cạnh tranh độc quyền
+- Độc quyền nhóm (Oligopoly)
+`
         }, {
             id: 5,
             title: 'Luận văn mẫu AI - UET',
@@ -505,7 +611,232 @@
             stars: 4.5,
             ratings: 22,
             downloads: 540,
-            preview: 'Luận văn: Ứng dụng CNN nhận dạng biển báo giao thông\n\nNội dung chính:\n- Tổng quan về CNN\n- Mô hình LeNet-5\n- Xây dựng dataset\n- Kết quả thực nghiệm (accuracy 98.2%)\n- Đánh giá và hướng phát triển'
+            preview: `LUẬN VĂN: ỨNG DỤNG CNN NHẬN DẠNG BIỂN BÁO GIAO THÔNG
+
+TÓM TẮT (Abstract)
+Luận văn trình bày ứng dụng mạng nơ-ron tích chập (CNN) để nhận dạng các biển báo giao thông nhằm hỗ trợ hệ thống xe tự lái và cảnh báo người lái.
+
+Chương 1: TỔNG QUAN VỀ NHẬN DẠNG ẢNH
+1.1 Giới thiệu bài toán nhận dạng ảnh
+1.2 Các phương pháp truyền thống: SIFT, HOG
+1.3 Học sâu và mạng nơ-ron tích chập
+
+Chương 2: MÔ HÌNH CNN - LENET-5
+2.1 Kiến trúc LeNet-5
+- Input 32x32
+- Convolution Layer 1: 6 filters 5x5
+- Subsampling (Pooling) 1: 2x2
+- Convolution Layer 2: 16 filters 5x5
+- Subsampling 2: 2x2
+- Fully Connected 1: 120 nodes
+- Fully Connected 2: 84 nodes
+- Output Layer: 10 lớp (softmax)
+
+Chương 3: XÂY DỰNG DATASET
+3.1 Thu thập dữ liệu: 1,000 ảnh biển báo từ GTSRB
+3.2 Tiền xử lý: chuẩn hóa, augment ảnh
+3.3 Chia tập train/test: 80/20
+
+Chương 4: KẾT QUẢ THỰC NGHIỆM
+4.1 Độ chính xác: 98.2%
+4.2 Đánh giá trên tập test: 97.6%
+
+Chương 5: KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+- Mở rộng nhận dạng biển báo trong điều kiện thiếu sáng
+- Tích hợp thời gian thực lên hệ thống xe tự lái
+`
+        }, {
+            id: 6,
+            title: 'Giáo trình Cấu trúc dữ liệu - UET',
+            uni: 'UET',
+            faculty: 'Công nghệ Thông tin',
+            subject: 'Cấu trúc dữ liệu',
+            type: 'PDF',
+            desc: 'Giáo trình Cấu trúc dữ liệu và Giải thuật.',
+            tags: 'dữ liệu, giải thuật',
+            author: 'Nguyễn Minh Anh',
+            date: '2026-05-20',
+            stars: 4.6,
+            ratings: 30,
+            downloads: 920,
+            preview: `GIÁO TRÌNH CẤU TRÚC DỮ LIỆU & GIẢI THUẬT
+
+CHƯƠNG 1: MỞ ĐẦU VỀ CẤU TRÚC DỮ LIỆU
+1.1 Khái niệm cấu trúc dữ liệu
+1.2 Các tiêu chí đánh giá: thời gian, không gian
+1.3 Độ phức tạp: O(1), O(log n), O(n), O(n log n), O(n^2)
+
+CHƯƠNG 2: MẢNG (ARRAY)
+- Khai báo và khởi tạo
+- Các phép toán: duyệt, tìm kiếm, chèn, xóa
+- Độ phức tạp: truy xuất O(1), chèn/xóa O(n)
+
+CHƯƠNG 3: DANH SÁCH LIÊN KẾT (LINKED LIST)
+- Node: data + next
+- Single Linked List, Double Linked List
+- Phép toán: chèn đầu, chèn cuối, xóa, duyệt
+
+CHƯƠNG 4: NGĂN XẾP (STACK) và HÀNG ĐỢI (QUEUE)
+- Stack: LIFO (push, pop, peek)
+- Queue: FIFO (enqueue, dequeue)
+- Ứng dụng: quản lý bộ nhớ, thuật toán DFS/BFS
+
+CHƯƠNG 5: CÂY (TREE)
+- Binary Tree, BST, AVL Tree
+- Duyệt cây: Preorder, Inorder, Postorder
+`
+        }, {
+            id: 7,
+            title: 'Luật Dân sự - Tóm tắt - UL',
+            uni: 'UL',
+            faculty: 'Luật Dân sự',
+            subject: 'Luật Dân sự',
+            type: 'PDF',
+            desc: 'Tóm tắt Bộ Luật Dân sự 2025.',
+            tags: 'luật, dân sự',
+            author: 'Vũ Đình Quang',
+            date: '2026-05-15',
+            stars: 4.3,
+            ratings: 14,
+            downloads: 430,
+            preview: `BỘ LUẬT DÂN SỰ 2025 - TÓM TẮT
+
+PHẦN 1: QUY ĐỊNH CHUNG
+- Điều 1: Phạm vi điều chỉnh
+- Điều 2: Nguyên tắc cơ bản (tự do, tự nguyện, thiện chí)
+- Điều 3: Áp dụng tập quán, tương tự pháp luật
+
+PHẦN 2: QUYỀN SỞ HỮU
+- Điều 105: Quyền sở hữu bao gồm chiếm hữu, sử dụng, định đoạt
+- Điều 106: Đối tượng sở hữu: tài sản, tiền, giấy tờ có giá
+
+PHẦN 3: HỢP ĐỒNG
+- Điều 385: Khái niệm hợp đồng dân sự
+- Điều 386: Nguyên tắc thực hiện hợp đồng
+- Điều 400: Hợp đồng vô hiệu và hậu quả pháp lý
+
+PHẦN 4: BỒI THƯỜNG THIỆT HẠI NGOÀI HỢP ĐỒNG
+- Điều 584: Căn cứ phát sinh trách nhiệm bồi thường
+- Điều 585: Nguyên tắc bồi thường thiệt hại
+- Điều 590: Bồi thường thiệt hại do sức khỏe bị xâm phạm
+`
+        }, {
+            id: 8,
+            title: 'Tâm lý học đại cương - USSH',
+            uni: 'USSH',
+            faculty: 'Tâm lý học',
+            subject: 'Tâm lý học đại cương',
+            type: 'PPT',
+            desc: 'Slide bài giảng Tâm lý học đại cương.',
+            tags: 'tâm lý, xã hội',
+            author: 'Bùi Thị Mai Lan',
+            date: '2026-05-10',
+            stars: 4.2,
+            ratings: 20,
+            downloads: 380,
+            preview: `TÂM LÝ HỌC ĐẠI CƯƠNG - CHƯƠNG 1
+
+1.1 KHÁI NIỆM VÀ ĐỐI TƯỢNG
+Tâm lý học là khoa học nghiên cứu hành vi và quá trình tinh thần của con người.
+
+1.2 CÁC TRƯỜNG PHÁI TÂM LÝ HỌC CHÍNH
++ Cấu trúc luận (Structuralism): Wundt, Titchener
++ Chức năng luận (Functionalism): James, Dewey
++ Phân tâm học (Psychoanalysis): Freud
++ Hành vi luận (Behaviorism): Watson, Skinner
++ Tâm lý học nhân văn: Maslow, Rogers
++ Nhận thức luận (Cognitive Psychology): Piaget, Neisser
+
+1.3 CÁC HIỆN TƯỢNG TÂM LÝ CƠ BẢN
+- Cảm giác (Sensation): ánh sáng, âm thanh, nhiệt độ
+- Tri giác (Perception): giải thích thông tin cảm giác
+- Học tập: Pavlov, Skinner, Bandura
+- Trí nhớ: Sensory, Short-term, Long-term
+- Tư duy: khái niệm, phán đoán, suy luận
+- Cảm xúc: cơ bản (vui, buồn, sợ, tức)
+`
+        }, {
+            id: 9,
+            title: 'Nguyên lý kế toán - Bài tập - UEB',
+            uni: 'UEB',
+            faculty: 'Kế toán - Kiểm toán',
+            subject: 'Nguyên lý kế toán',
+            type: 'DOC',
+            desc: 'Hệ thống bài tập có lời giải.',
+            tags: 'kế toán, bài tập',
+            author: 'Lê Văn Hùng',
+            date: '2026-05-05',
+            stars: 4.6,
+            ratings: 25,
+            downloads: 610,
+            preview: `BÀI TẬP NGUYÊN LÝ KẾ TOÁN - CÓ LỜI GIẢI
+
+Bài 1: Định khoản các nghiệp vụ kinh tế phát sinh
+Công ty A có các nghiệp vụ sau:
+1. Góp vốn bằng tiền mặt: 500,000,000đ
+   Nợ TK 111: 500,000,000
+   Có TK 411: 500,000,000
+
+2. Mua nguyên vật liệu nhập kho, thanh toán bằng chuyển khoản: 120,000,000đ
+   Nợ TK 152: 120,000,000
+   Có TK 112: 120,000,000
+
+3. Chi tiền mặt trả lương cho công nhân: 30,000,000đ
+   Nợ TK 622: 30,000,000
+   Có TK 111: 30,000,000
+
+4. Khấu hao TSCĐ: 8,000,000đ
+   Nợ TK 627: 8,000,000
+   Có TK 214: 8,000,000
+
+5. Rút TGNH về nhập quỹ TM: 10,000,000đ
+   Nợ TK 111: 10,000,000
+   Có TK 112: 10,000,000
+
+Bài 2: Lập Báo cáo tài chính
+... (xem đầy đủ trong file)`
+        }, {
+            id: 10,
+            title: 'Mạng máy tính - Giao thức - UET',
+            uni: 'UET',
+            faculty: 'Công nghệ Thông tin',
+            subject: 'Mạng máy tính',
+            type: 'PDF',
+            desc: 'Tổng hợp các giao thức mạng quan trọng.',
+            tags: 'mạng, giao thức',
+            author: 'Nguyễn Minh Anh',
+            date: '2026-04-28',
+            stars: 4.5,
+            ratings: 19,
+            downloads: 490,
+            preview: `MẠNG MÁY TÍNH - CÁC GIAO THỨC QUAN TRỌNG
+
+1. MÔ HÌNH OSI (7 tầng)
+- Tầng 1: Physical - kết nối vật lý
+- Tầng 2: Data Link - MAC, Ethernet
+- Tầng 3: Network - IP, định tuyến (Router)
+- Tầng 4: Transport - TCP, UDP
+- Tầng 5: Session - quản lý phiên kết nối
+- Tầng 6: Presentation - mã hóa, nén dữ liệu
+- Tầng 7: Application - HTTP, FTP, DNS, SMTP
+
+2. GIAO THỨC TCP/IP
+- IP: định tuyến gói tin
+- TCP: kết nối hướng, đảm bảo tin cậy (3-way handshake)
+- UDP: phiên kết nối, không đảm bảo tin cậy
+
+3. ĐỊA CHỈ IP và SUBNET
+- IPv4: 32 bit (192.168.1.1)
+- Subnet Mask: /24 (255.255.255.0)
+- CIDR: xác định phạm vi địa chỉ
+
+4. GIAO THỨC ỨNG DỤNG
+- HTTP/HTTPS: web
+- FTP: truyền file
+- DNS: phân giải tên miền
+- SMTP/IMAP/POP3: email
+- SSH: kết nối bảo mật
+`
         }];
 
         const defaultUsers = [
@@ -522,17 +853,32 @@
             ];
         });
 
-        // =====================================================
-        // KHỞI TẠO LƯU TRỮ
-        // =====================================================
+        // ============================================================
+        // KHỞI TẠO LƯU TRỮ – RESET DATA NẾU CẦN
+        // ============================================================
         function initStorage() {
-            if (!localStorage.getItem('vnu_docs')) localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
+            // Nếu chưa có dữ liệu, tạo mới
+            if (!localStorage.getItem('vnu_docs')) {
+                localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
+            } else {
+                // Kiểm tra xem dữ liệu có preview hay không, nếu không thì ghi đè
+                const existingDocs = JSON.parse(localStorage.getItem('vnu_docs'));
+                if (existingDocs.length > 0 && !existingDocs[0].preview) {
+                    // Nếu dữ liệu cũ không có preview, ghi đè bằng dữ liệu mới
+                    localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
+                }
+            }
+
             if (!localStorage.getItem('vnu_users')) {
                 const allUsers = [...defaultUsers, { name: 'Admin Test', studentId: '999999', email: 'admin@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 0 }];
                 localStorage.setItem('vnu_users', JSON.stringify(allUsers));
             }
-            if (!localStorage.getItem('vnu_reviews')) localStorage.setItem('vnu_reviews', JSON.stringify(defaultReviews));
-            if (!localStorage.getItem('vnu_current_user')) localStorage.removeItem('vnu_current_user');
+            if (!localStorage.getItem('vnu_reviews')) {
+                localStorage.setItem('vnu_reviews', JSON.stringify(defaultReviews));
+            }
+            if (!localStorage.getItem('vnu_current_user')) {
+                localStorage.removeItem('vnu_current_user');
+            }
         }
         initStorage();
 
@@ -542,9 +888,9 @@
         let currentUser = JSON.parse(localStorage.getItem('vnu_current_user')) || null;
         let previewDocId = null;
 
-        // =====================================================
+        // ============================================================
         // HÀM TIỆN ÍCH
-        // =====================================================
+        // ============================================================
         function getUniName(code) { return vnuStructure[code]?.name || code; }
 
         function getFaculties(code) { return vnuStructure[code]?.faculties || []; }
@@ -593,9 +939,9 @@
                 `).join('');
         }
 
-        // =====================================================
-        // XEM TRƯỚC – HIỂN THỊ NỘI DUNG THẬT
-        // =====================================================
+        // ============================================================
+        // XEM TRƯỚC
+        // ============================================================
         function openPreview(id) {
             const doc = docs.find(d => d.id === id);
             if (!doc) { showToast('Không tìm thấy tài liệu', 'error'); return; }
@@ -604,7 +950,11 @@
             document.getElementById('previewTitle').textContent = '📄 ' + doc.title;
             document.getElementById('previewMeta').textContent = doc.author + ' • ' + doc.date + ' • ' + doc.type;
             document.getElementById('previewIcon').textContent = iconMap[doc.type] || '📄';
-            document.getElementById('previewText').textContent = doc.preview || 'Không có nội dung xem trước.';
+
+            // Lấy nội dung preview, nếu không có thì hiển thị thông báo
+            const previewText = doc.preview || 'Nội dung xem trước chưa được cập nhật. Vui lòng tải xuống để xem đầy đủ.';
+            document.getElementById('previewText').textContent = previewText;
+
             document.getElementById('previewDownloadBtn').onclick = function() { downloadDoc(id); };
             document.getElementById('previewModal').classList.add('active');
         }
@@ -615,20 +965,19 @@
         function downloadFromPreview() { if (previewDocId) downloadDoc(previewDocId);
             closePreview(); }
 
-        // =====================================================
+        // ============================================================
         // TẢI FILE (TẠO FILE .txt TỪ PREVIEW)
-        // =====================================================
+        // ============================================================
         function downloadDoc(id) {
             if (!currentUser) { showToast('Vui lòng đăng nhập để tải', 'error'); return; }
             const doc = docs.find(d => d.id === id);
             if (!doc) return;
 
-            // Tăng số lượt tải
             doc.downloads += 1;
             localStorage.setItem('vnu_docs', JSON.stringify(docs));
 
-            // Tạo file .txt từ nội dung preview
-            const content = doc.preview || 'Nội dung trống.';
+            // Tạo file .txt từ preview
+            const content = doc.preview || 'Tài liệu: ' + doc.title + '\nTác giả: ' + doc.author + '\nNgày đăng: ' + doc.date;
             const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -641,9 +990,9 @@
             showToast('✅ Đã tải ' + doc.title, 'success');
         }
 
-        // =====================================================
-        // CÁC CHỨC NĂNG KHÁC (ĐIỀU HƯỚNG, ĐĂNG NHẬP, V.V.)
-        // =====================================================
+        // ============================================================
+        // CÁC CHỨC NĂNG KHÁC
+        // ============================================================
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const target = document.getElementById('page-' + pageId);
@@ -988,7 +1337,7 @@
                 stars: 0,
                 ratings: 0,
                 downloads: 0,
-                preview: 'Nội dung xem trước: ' + title
+                preview: 'Nội dung xem trước của tài liệu: ' + title + '\n\nMô tả: ' + (desc || 'Chưa có mô tả')
             };
             docs.push(newDoc);
             localStorage.setItem('vnu_docs', JSON.stringify(docs));
@@ -1055,6 +1404,8 @@
         renderHome();
         renderLibrary(docs);
         console.log('✅ VNU Tài Liệu 0Đ đã sẵn sàng!');
+        console.log(`📚 ${docs.length} tài liệu, 🏛️ ${unitCodes.length} đơn vị, 👥 ${users.length} người dùng`);
     </script>
+
 </body>
 </html>
