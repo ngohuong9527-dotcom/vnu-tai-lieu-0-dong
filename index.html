@@ -5,1053 +5,1916 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VNU Tài Liệu 0 Đồng</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
-        body { background:#f1f5f9; color:#1e293b; line-height:1.6; }
-        a { text-decoration:none; color:inherit; cursor:pointer; }
-        .container { max-width:1200px; margin:0 auto; padding:0 20px; }
-        .page { display:none; animation:fadeIn .3s; }
-        .page.active { display:block; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        body {
+            background: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .page {
+            display: none;
+            animation: fadeIn .3s;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        header { background:white; box-shadow:0 2px 10px rgba(0,0,0,.06); padding:14px 0; position:sticky; top:0; z-index:100; }
-        .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-        .logo { font-size:22px; font-weight:700; color:#0a3d62; cursor:pointer; }
-        .logo span { color:#2d7d9a; }
-        nav { display:flex; gap:16px; flex-wrap:wrap; font-size:14px; font-weight:500; align-items:center; }
-        nav a { color:#334155; transition:.2s; padding:4px 0; border-bottom:2px solid transparent; cursor:pointer; }
-        nav a:hover { color:#2d7d9a; }
-        nav a.active-link { color:#2d7d9a; border-bottom-color:#2d7d9a; }
-        .login-btn { background:#2d7d9a; color:#fff !important; padding:6px 18px; border-radius:20px; border-bottom:none !important; }
-        .login-btn:hover { background:#1a5f7a; color:#fff !important; }
-        .profile-mini { display:none; align-items:center; gap:10px; background:#f1f5f9; padding:6px 16px 6px 20px; border-radius:30px; }
-        .profile-mini.active { display:flex; }
-        .profile-mini .pname { font-weight:600; font-size:14px; color:#1e293b; }
-        .logout-btn { background:#e9edf2; border:none; padding:4px 14px; border-radius:16px; font-size:12px; cursor:pointer; color:#64748b; font-weight:600; }
-        .logout-btn:hover { background:#d1d9e6; color:#1e293b; }
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
+            padding: 14px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0a3d62;
+            cursor: pointer;
+        }
+        .logo span {
+            color: #2d7d9a;
+        }
+        nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            font-weight: 500;
+            align-items: center;
+        }
+        nav a {
+            color: #334155;
+            transition: .2s;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+        nav a:hover {
+            color: #2d7d9a;
+        }
+        nav a.active-link {
+            color: #2d7d9a;
+            border-bottom-color: #2d7d9a;
+        }
+        .login-btn {
+            background: #2d7d9a;
+            color: #fff !important;
+            padding: 6px 18px;
+            border-radius: 20px;
+            border-bottom: none !important;
+        }
+        .login-btn:hover {
+            background: #1a5f7a;
+            color: #fff !important;
+        }
+        .profile-mini {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 6px 16px 6px 20px;
+            border-radius: 30px;
+        }
+        .profile-mini.active {
+            display: flex;
+        }
+        .profile-mini .pname {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .logout-btn {
+            background: #e9edf2;
+            border: none;
+            padding: 4px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .logout-btn:hover {
+            background: #d1d9e6;
+            color: #1e293b;
+        }
 
-        .hero { background:linear-gradient(135deg,#0a3d62,#2d7d9a); color:#fff; padding:60px 0 50px; text-align:center; border-radius:0 0 40px 40px; margin-bottom:30px; }
-        .hero h1 { font-size:36px; font-weight:700; margin-bottom:14px; }
-        .hero p { font-size:17px; max-width:600px; margin:0 auto 24px; opacity:.9; }
-        .btn-group { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
-        .btn { display:inline-block; padding:11px 30px; border-radius:30px; font-weight:600; transition:.2s; border:none; cursor:pointer; font-size:15px; }
-        .btn-white { background:#fff; color:#0a3d62; }
-        .btn-white:hover { background:#e2e8f0; transform:translateY(-2px); }
-        .btn-outline { border:2px solid #fff; color:#fff; background:transparent; }
-        .btn-outline:hover { background:rgba(255,255,255,.1); transform:translateY(-2px); }
-        .btn-primary { background:#2d7d9a; color:#fff; }
-        .btn-primary:hover { background:#1a5f7a; transform:translateY(-2px); }
-        .btn-success { background:#0b8a5e; color:#fff; }
-        .btn-success:hover { background:#09724d; transform:translateY(-2px); }
+        .hero {
+            background: linear-gradient(135deg, #0a3d62, #2d7d9a);
+            color: #fff;
+            padding: 60px 0 50px;
+            text-align: center;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 30px;
+        }
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .hero p {
+            font-size: 17px;
+            max-width: 600px;
+            margin: 0 auto 24px;
+            opacity: .9;
+        }
+        .btn-group {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 11px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: .2s;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .btn-white {
+            background: #fff;
+            color: #0a3d62;
+        }
+        .btn-white:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            border: 2px solid #fff;
+            color: #fff;
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, .1);
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background: #2d7d9a;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #1a5f7a;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #0b8a5e;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #09724d;
+            transform: translateY(-2px);
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 13px;
+        }
 
-        .stats { display:flex; justify-content:center; gap:50px; flex-wrap:wrap; background:#fff; padding:28px 20px; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.06); margin:-26px auto 36px; max-width:750px; }
-        .stats .item { text-align:center; }
-        .stats .number { font-size:30px; font-weight:700; color:#0a3d62; }
-        .stats .label { font-size:13px; color:#64748b; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            background: #fff;
+            padding: 28px 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .06);
+            margin: -26px auto 36px;
+            max-width: 750px;
+        }
+        .stats .item {
+            text-align: center;
+        }
+        .stats .number {
+            font-size: 30px;
+            font-weight: 700;
+            color: #0a3d62;
+        }
+        .stats .label {
+            font-size: 13px;
+            color: #64748b;
+        }
 
-        section { margin-bottom:40px; }
-        .section-title { font-size:22px; font-weight:700; color:#0a3d62; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
-        .section-title a { font-size:14px; font-weight:500; color:#2d7d9a; cursor:pointer; }
+        section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0a3d62;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-title a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d7d9a;
+            cursor: pointer;
+        }
 
-        .subject-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
-        .subject-card { background:#fff; padding:12px 16px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,.04); text-align:center; font-weight:600; font-size:14px; transition:.2s; border:1px solid #e9edf2; cursor:pointer; }
-        .subject-card:hover { border-color:#2d7d9a; transform:translateY(-2px); }
-        .subject-card .star { color:#f59e0b; font-size:12px; }
-        .subject-card .uni-tag { display:block; font-size:11px; font-weight:400; color:#94a3b8; margin-top:2px; }
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .subject-card {
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: .2s;
+            border: 1px solid #e9edf2;
+            cursor: pointer;
+        }
+        .subject-card:hover {
+            border-color: #2d7d9a;
+            transform: translateY(-2px);
+        }
+        .subject-card .star {
+            color: #f59e0b;
+            font-size: 12px;
+        }
+        .subject-card .uni-tag {
+            display: block;
+            font-size: 11px;
+            font-weight: 400;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
 
-        .doc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:18px; }
-        .doc-card { background:#fff; border-radius:12px; padding:16px 16px 14px; box-shadow:0 2px 10px rgba(0,0,0,.05); transition:.2s; border:1px solid #e9edf2; cursor:pointer; }
-        .doc-card:hover { border-color:#2d7d9a; transform:translateY(-4px); box-shadow:0 8px 30px rgba(0,0,0,.08); }
-        .doc-card .badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 12px; border-radius:12px; color:#334155; background:#e9edf2; margin-bottom:6px; }
-        .doc-card .badge.pdf { background:#fee2e2; color:#b91c1c; }
-        .doc-card .badge.doc { background:#dbeafe; color:#1e40af; }
-        .doc-card .badge.ppt { background:#fef3c7; color:#92400e; }
-        .doc-card .badge.zip { background:#e0e7ff; color:#3730a3; }
-        .doc-card h4 { font-size:15px; margin-bottom:3px; }
-        .doc-card .meta { font-size:12px; color:#64748b; margin-bottom:8px; }
-        .doc-card .meta .uni { color:#2d7d9a; font-weight:500; }
-        .doc-card .footer { display:flex; justify-content:space-between; align-items:center; font-size:13px; border-top:1px solid #f1f5f9; padding-top:8px; }
-        .doc-card .footer .stars { color:#f59e0b; }
-        .doc-card .footer .downloads { color:#64748b; }
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 18px;
+        }
+        .doc-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px 16px 14px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+            transition: .2s;
+            border: 1px solid #e9edf2;
+            cursor: pointer;
+        }
+        .doc-card:hover {
+            border-color: #2d7d9a;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .08);
+        }
+        .doc-card .badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 12px;
+            color: #334155;
+            background: #e9edf2;
+            margin-bottom: 6px;
+        }
+        .doc-card .badge.pdf {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .doc-card .badge.doc {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .doc-card .badge.ppt {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .doc-card .badge.zip {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+        .doc-card h4 {
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
+        .doc-card .meta {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .doc-card .meta .uni {
+            color: #2d7d9a;
+            font-weight: 500;
+        }
+        .doc-card .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 8px;
+        }
+        .doc-card .footer .stars {
+            color: #f59e0b;
+        }
+        .doc-card .footer .downloads {
+            color: #64748b;
+        }
+        .doc-card .action-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .doc-card .action-row .btn {
+            padding: 4px 12px;
+            font-size: 12px;
+            flex: 1;
+        }
 
-        .form-card { background:#fff; max-width:640px; margin:0 auto; padding:30px 36px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,.06); }
-        .form-card h2 { text-align:center; margin-bottom:8px; color:#0a3d62; }
-        .form-card .sub { text-align:center; color:#64748b; font-size:14px; margin-bottom:24px; }
-        .form-group { margin-bottom:16px; }
-        .form-group label { display:block; font-weight:600; font-size:14px; margin-bottom:4px; color:#334155; }
-        .form-group label .required { color:#dc2626; }
-        .form-group input, .form-group select, .form-group textarea { width:100%; padding:10px 14px; border:1px solid #d1d9e6; border-radius:8px; font-size:14px; transition:.2s; background:#fafcff; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline:none; border-color:#2d7d9a; box-shadow:0 0 0 3px rgba(45,125,154,.12); }
-        .form-group textarea { resize:vertical; min-height:80px; }
-        .form-group .hint { font-size:12px; color:#94a3b8; margin-top:4px; }
-        .form-group input[type="file"] { padding:8px; border:2px dashed #d1d9e6; background:#f8fafc; }
-        .form-group .checkbox-group { display:flex; align-items:center; gap:10px; }
-        .form-group .checkbox-group input { width:auto; width:18px; height:18px; }
-        .form-group .checkbox-group label { font-weight:400; font-size:14px; }
-        .form-actions { display:flex; gap:12px; justify-content:center; margin-top:8px; flex-wrap:wrap; }
+        .form-card {
+            background: #fff;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 30px 36px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .06);
+        }
+        .form-card h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #0a3d62;
+        }
+        .form-card .sub {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #334155;
+        }
+        .form-group label .required {
+            color: #dc2626;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d1d9e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: .2s;
+            background: #fafcff;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2d7d9a;
+            box-shadow: 0 0 0 3px rgba(45, 125, 154, .12);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group .hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .form-group input[type="file"] {
+            padding: 8px;
+            border: 2px dashed #d1d9e6;
+            background: #f8fafc;
+        }
+        .form-group .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-group .checkbox-group input {
+            width: auto;
+            width: 18px;
+            height: 18px;
+        }
+        .form-group .checkbox-group label {
+            font-weight: 400;
+            font-size: 14px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
 
-        .leaderboard-table { width:100%; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(0,0,0,.05); }
-        .leaderboard-table table { width:100%; border-collapse:collapse; }
-        .leaderboard-table th { background:#0a3d62; color:#fff; padding:12px 18px; text-align:left; font-size:14px; }
-        .leaderboard-table td { padding:12px 18px; border-bottom:1px solid #f1f5f9; font-size:14px; }
-        .leaderboard-table tr:hover td { background:#f8fafc; }
-        .leaderboard-table .rank { font-weight:700; font-size:16px; }
-        .leaderboard-table .rank.gold { color:#f59e0b; }
-        .leaderboard-table .rank.silver { color:#94a3b8; }
-        .leaderboard-table .rank.bronze { color:#d97706; }
-        .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+        .leaderboard-table {
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .05);
+        }
+        .leaderboard-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard-table th {
+            background: #0a3d62;
+            color: #fff;
+            padding: 12px 18px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .leaderboard-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        .leaderboard-table tr:hover td {
+            background: #f8fafc;
+        }
+        .leaderboard-table .rank {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .leaderboard-table .rank.gold {
+            color: #f59e0b;
+        }
+        .leaderboard-table .rank.silver {
+            color: #94a3b8;
+        }
+        .leaderboard-table .rank.bronze {
+            color: #d97706;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
 
-        .doc-detail { background:#fff; border-radius:16px; padding:30px 36px; box-shadow:0 4px 24px rgba(0,0,0,.06); max-width:800px; margin:0 auto; }
-        .doc-detail .doc-title { font-size:28px; font-weight:700; color:#0a3d62; margin-bottom:4px; }
-        .doc-detail .doc-meta { color:#64748b; font-size:14px; margin-bottom:16px; }
-        .doc-detail .doc-meta span { margin-right:20px; }
-        .doc-detail .doc-desc { margin:16px 0 20px; padding:16px; background:#f8fafc; border-radius:8px; border-left:4px solid #2d7d9a; }
-        .doc-detail .doc-actions { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:24px; }
+        .doc-detail {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px 36px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .06);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .doc-detail .doc-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0a3d62;
+            margin-bottom: 4px;
+        }
+        .doc-detail .doc-meta {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .doc-detail .doc-meta span {
+            margin-right: 20px;
+        }
+        .doc-detail .doc-desc {
+            margin: 16px 0 20px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #2d7d9a;
+        }
+        .doc-detail .doc-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
 
-        .rating-section { border-top:1px solid #e9edf2; padding-top:20px; margin-top:10px; }
-        .rating-section h4 { font-size:16px; margin-bottom:10px; }
-        .star-rating { display:flex; gap:6px; font-size:28px; cursor:pointer; margin-bottom:10px; }
-        .star-rating .star { color:#d1d9e6; transition:.15s; user-select:none; }
-        .star-rating .star.active { color:#f59e0b; }
-        .star-rating .star:hover { color:#f59e0b; transform:scale(1.1); }
-        .review-list { margin-top:14px; }
-        .review-item { padding:12px 0; border-bottom:1px solid #f1f5f9; }
-        .review-item .review-header { display:flex; justify-content:space-between; font-size:13px; color:#64748b; flex-wrap:wrap; gap:4px; }
-        .review-item .review-header .name { font-weight:600; color:#1e293b; }
-        .review-item .review-stars { color:#f59e0b; font-size:14px; }
-        .review-item .review-text { margin-top:4px; font-size:14px; }
+        .rating-section {
+            border-top: 1px solid #e9edf2;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+        .rating-section h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .star-rating {
+            display: flex;
+            gap: 6px;
+            font-size: 28px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .star-rating .star {
+            color: #d1d9e6;
+            transition: .15s;
+            user-select: none;
+        }
+        .star-rating .star.active {
+            color: #f59e0b;
+        }
+        .star-rating .star:hover {
+            color: #f59e0b;
+            transform: scale(1.1);
+        }
+        .review-list {
+            margin-top: 14px;
+        }
+        .review-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .review-item .review-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #64748b;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .review-item .review-header .name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .review-item .review-stars {
+            color: #f59e0b;
+            font-size: 14px;
+        }
+        .review-item .review-text {
+            margin-top: 4px;
+            font-size: 14px;
+        }
 
-        .toast-container { position:fixed; top:80px; right:20px; z-index:999; display:flex; flex-direction:column; gap:10px; }
-        .toast { background:#1e293b; color:#fff; padding:14px 24px; border-radius:10px; font-size:14px; box-shadow:0 8px 32px rgba(0,0,0,.2); animation:slideIn .3s ease; min-width:240px; }
-        .toast.success { background:#0b8a5e; }
-        .toast.error { background:#dc2626; }
-        @keyframes slideIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .2);
+            animation: slideIn .3s ease;
+            min-width: 240px;
+        }
+        .toast.success {
+            background: #0b8a5e;
+        }
+        .toast.error {
+            background: #dc2626;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
-        .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.4); z-index:200; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
-        .modal-overlay.active { display:flex; }
-        .modal-box { background:#fff; max-width:440px; width:92%; padding:32px 30px; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.2); animation:modalIn .25s ease; }
-        @keyframes modalIn { from{opacity:0;transform:scale(.94) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
-        .modal-box h2 { text-align:center; margin-bottom:4px; color:#0a3d62; }
-        .modal-box .sub { text-align:center; color:#64748b; font-size:14px; margin-bottom:20px; }
-        .modal-close { float:right; background:none; border:none; font-size:24px; color:#94a3b8; cursor:pointer; line-height:1; }
-        .modal-close:hover { color:#1e293b; }
-        .modal-tabs { display:flex; gap:0; margin-bottom:18px; border-radius:8px; overflow:hidden; border:1px solid #e9edf2; }
-        .modal-tabs button { flex:1; padding:10px; border:none; background:#f8fafc; font-weight:600; font-size:14px; cursor:pointer; transition:.2s; color:#64748b; }
-        .modal-tabs button.active-tab { background:#2d7d9a; color:#fff; }
-        .modal-tabs button:hover:not(.active-tab) { background:#e9edf2; }
-        .modal-form { display:none; }
-        .modal-form.active-form { display:block; }
-        .login-links { text-align:center; margin-top:12px; font-size:14px; }
-        .login-links a { color:#2d7d9a; font-weight:600; cursor:pointer; }
-        .login-links a:hover { text-decoration:underline; }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: #fff;
+            max-width: 480px;
+            width: 92%;
+            padding: 32px 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+            animation: modalIn .25s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(.94) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        .modal-box h2 {
+            text-align: center;
+            margin-bottom: 4px;
+            color: #0a3d62;
+        }
+        .modal-box .sub {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #94a3b8;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: #1e293b;
+        }
+        .modal-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e9edf2;
+        }
+        .modal-tabs button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: .2s;
+            color: #64748b;
+        }
+        .modal-tabs button.active-tab {
+            background: #2d7d9a;
+            color: #fff;
+        }
+        .modal-tabs button:hover:not(.active-tab) {
+            background: #e9edf2;
+        }
+        .modal-form {
+            display: none;
+        }
+        .modal-form.active-form {
+            display: block;
+        }
+        .login-links {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        .login-links a {
+            color: #2d7d9a;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .login-links a:hover {
+            text-decoration: underline;
+        }
 
-        .filter-bar { background:#fff; padding:18px 22px; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.05); margin-bottom:24px; display:flex; flex-wrap:wrap; gap:14px 20px; align-items:center; }
-        .filter-bar .filter-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-        .filter-bar .filter-group label { font-weight:600; font-size:13px; color:#334155; }
-        .filter-bar .filter-group select, .filter-bar .filter-group input { padding:6px 12px; border:1px solid #d1d9e6; border-radius:6px; font-size:13px; background:#fafcff; }
-        .filter-bar .filter-group select:focus, .filter-bar .filter-group input:focus { outline:none; border-color:#2d7d9a; }
-        .filter-bar .filter-group .checkbox-group { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-        .filter-bar .filter-group .checkbox-group label { font-weight:400; font-size:13px; display:flex; align-items:center; gap:4px; }
-        .filter-bar .filter-group .checkbox-group input[type="checkbox"] { width:16px; height:16px; accent-color:#2d7d9a; }
-        .filter-actions { display:flex; gap:10px; margin-left:auto; }
-        .filter-actions .btn { padding:6px 20px; font-size:13px; }
+        .filter-bar {
+            background: #fff;
+            padding: 18px 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+            align-items: center;
+        }
+        .filter-bar .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .filter-bar .filter-group label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+        }
+        .filter-bar .filter-group select,
+        .filter-bar .filter-group input {
+            padding: 6px 12px;
+            border: 1px solid #d1d9e6;
+            border-radius: 6px;
+            font-size: 13px;
+            background: #fafcff;
+        }
+        .filter-bar .filter-group select:focus,
+        .filter-bar .filter-group input:focus {
+            outline: none;
+            border-color: #2d7d9a;
+        }
+        .filter-bar .filter-group .checkbox-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-bar .filter-group .checkbox-group label {
+            font-weight: 400;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .filter-bar .filter-group .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #2d7d9a;
+        }
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+        .filter-actions .btn {
+            padding: 6px 20px;
+            font-size: 13px;
+        }
 
-        .page-bg { background:#f1f5f9; padding:24px 0 40px; }
-        .page-title { font-size:26px; font-weight:700; color:#0a3d62; margin-bottom:6px; }
-        .page-sub { color:#64748b; margin-bottom:24px; font-size:15px; }
+        .page-bg {
+            background: #f1f5f9;
+            padding: 24px 0 40px;
+        }
+        .page-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0a3d62;
+            margin-bottom: 6px;
+        }
+        .page-sub {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
 
-        .guide-step { display:flex; gap:20px; align-items:flex-start; background:#fff; padding:18px 24px; border-radius:12px; margin-bottom:14px; border-left:4px solid #2d7d9a; box-shadow:0 2px 8px rgba(0,0,0,.04); }
-        .guide-step .num { font-size:28px; font-weight:700; color:#2d7d9a; min-width:44px; }
-        .guide-step .content h4 { font-size:16px; margin-bottom:2px; }
-        .guide-step .content p { color:#64748b; font-size:14px; }
+        .guide-step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background: #fff;
+            padding: 18px 24px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            border-left: 4px solid #2d7d9a;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+        }
+        .guide-step .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d7d9a;
+            min-width: 44px;
+        }
+        .guide-step .content h4 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        .guide-step .content p {
+            color: #64748b;
+            font-size: 14px;
+        }
 
-        .rules-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-        .rules-box { background:#fff; padding:18px 22px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
-        .rules-box h4 { color:#0a3d62; margin-bottom:8px; }
-        .rules-box ul { list-style:none; padding:0; font-size:14px; color:#334155; }
-        .rules-box ul li { padding:4px 0; padding-left:24px; position:relative; }
-        .rules-box ul li::before { content:"•"; color:#2d7d9a; font-weight:700; position:absolute; left:4px; }
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .rules-box {
+            background: #fff;
+            padding: 18px 22px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .04);
+        }
+        .rules-box h4 {
+            color: #0a3d62;
+            margin-bottom: 8px;
+        }
+        .rules-box ul {
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #334155;
+        }
+        .rules-box ul li {
+            padding: 4px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        .rules-box ul li::before {
+            content: "•";
+            color: #2d7d9a;
+            font-weight: 700;
+            position: absolute;
+            left: 4px;
+        }
+
+        /* PREVIEW MODAL */
+        .preview-content {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 14px;
+            color: #334155;
+            border: 1px solid #e9edf2;
+        }
+        .preview-content .file-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .preview-content .file-info {
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+        }
 
         @media (max-width:768px) {
-            .header-inner { flex-direction:column; align-items:stretch; gap:8px; }
-            nav { justify-content:center; font-size:13px; gap:10px; }
-            .hero h1 { font-size:26px; }
-            .stats { gap:24px; padding:16px 12px; }
-            .stats .number { font-size:22px; }
-            .doc-grid { grid-template-columns:1fr; }
-            .subject-grid { grid-template-columns:repeat(2,1fr); }
-            .two-col { grid-template-columns:1fr; }
-            .form-card { padding:20px 16px; }
-            .doc-detail { padding:20px 16px; }
-            .doc-detail .doc-title { font-size:22px; }
-            .leaderboard-table { overflow-x:auto; }
-            .leaderboard-table table { font-size:13px; min-width:500px; }
-            .leaderboard-table th, .leaderboard-table td { padding:8px 12px; }
-            .filter-bar { flex-direction:column; align-items:stretch; }
-            .filter-actions { margin-left:0; justify-content:center; }
-            .rules-grid { grid-template-columns:1fr; }
-            .guide-step { flex-direction:column; gap:4px; }
-            .guide-step .num { font-size:20px; }
+            .header-inner {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            nav {
+                justify-content: center;
+                font-size: 13px;
+                gap: 10px;
+            }
+            .hero h1 {
+                font-size: 26px;
+            }
+            .stats {
+                gap: 24px;
+                padding: 16px 12px;
+            }
+            .stats .number {
+                font-size: 22px;
+            }
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+            .subject-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            .form-card {
+                padding: 20px 16px;
+            }
+            .doc-detail {
+                padding: 20px 16px;
+            }
+            .doc-detail .doc-title {
+                font-size: 22px;
+            }
+            .leaderboard-table {
+                overflow-x: auto;
+            }
+            .leaderboard-table table {
+                font-size: 13px;
+                min-width: 500px;
+            }
+            .leaderboard-table th,
+            .leaderboard-table td {
+                padding: 8px 12px;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-actions {
+                margin-left: 0;
+                justify-content: center;
+            }
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+            .guide-step {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .guide-step .num {
+                font-size: 20px;
+            }
         }
         @media (max-width:480px) {
-            .hero { padding:32px 0 28px; }
-            .hero h1 { font-size:20px; }
-            .hero p { font-size:14px; }
-            .btn { padding:8px 18px; font-size:13px; }
-            nav { font-size:12px; gap:6px; }
-            .login-btn { padding:4px 12px; }
-            .stats { gap:14px; padding:12px 8px; }
-            .stats .number { font-size:18px; }
-            .stats .label { font-size:11px; }
-            .section-title { font-size:18px; }
+            .hero {
+                padding: 32px 0 28px;
+            }
+            .hero h1 {
+                font-size: 20px;
+            }
+            .hero p {
+                font-size: 14px;
+            }
+            .btn {
+                padding: 8px 18px;
+                font-size: 13px;
+            }
+            nav {
+                font-size: 12px;
+                gap: 6px;
+            }
+            .login-btn {
+                padding: 4px 12px;
+            }
+            .stats {
+                gap: 14px;
+                padding: 12px 8px;
+            }
+            .stats .number {
+                font-size: 18px;
+            }
+            .stats .label {
+                font-size: 11px;
+            }
+            .section-title {
+                font-size: 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="toast-container" id="toastContainer"></div>
+    <!-- ===== TOAST ===== -->
+    <div class="toast-container" id="toastContainer"></div>
 
-<div class="modal-overlay" id="authModal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <h2>📚 VNU Tài Liệu 0Đ</h2>
-        <div class="sub">Đăng nhập để truy cập kho tài liệu</div>
-        <div class="modal-tabs">
-            <button class="active-tab" onclick="switchAuthTab('login')">Đăng nhập</button>
-            <button onclick="switchAuthTab('register')">Đăng ký</button>
-        </div>
-        <div class="modal-form active-form" id="loginForm">
-            <div class="form-group"><label>Email hoặc Mã SV</label><input type="text" id="loginEmail" placeholder="example@vnu.edu.vn" /></div>
-            <div class="form-group"><label>Mật khẩu</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
-            <div class="form-actions"><button class="btn btn-primary" onclick="handleLogin()">Đăng nhập</button></div>
-            <div class="login-links"><a onclick="switchAuthTab('register')">Chưa có tài khoản? Đăng ký</a></div>
-        </div>
-        <div class="modal-form" id="registerForm">
-            <div class="form-group"><label>Họ tên <span class="required">*</span></label><input type="text" id="regName" placeholder="Nguyễn Văn A" /></div>
-            <div class="form-group"><label>Mã sinh viên <span class="required">*</span></label><input type="text" id="regStudentId" placeholder="22000000" /></div>
-            <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="regEmail" placeholder="example@vnu.edu.vn" /></div>
-            <div class="form-group">
-                <label>Đơn vị <span class="required">*</span></label>
-                <select id="regUniversity"><option value="">-- Chọn đơn vị --</option></select>
+    <!-- ===== MODAL ĐĂNG NHẬP ===== -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h2>📚 VNU Tài Liệu 0Đ</h2>
+            <div class="sub">Đăng nhập để truy cập kho tài liệu</div>
+            <div class="modal-tabs">
+                <button class="active-tab" onclick="switchAuthTab('login')">Đăng nhập</button>
+                <button onclick="switchAuthTab('register')">Đăng ký</button>
             </div>
-            <div class="form-group">
-                <label>Khoa/Viện <span class="required">*</span></label>
-                <select id="regFaculty"><option value="">-- Chọn khoa --</option></select>
+            <!-- Đăng nhập -->
+            <div class="modal-form active-form" id="loginForm">
+                <div class="form-group"><label>Email hoặc Mã SV</label><input type="text" id="loginEmail" placeholder="example@vnu.edu.vn" /></div>
+                <div class="form-group"><label>Mật khẩu</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
+                <div class="form-actions"><button class="btn btn-primary" onclick="handleLogin()">Đăng nhập</button></div>
+                <div class="login-links"><a onclick="switchAuthTab('register')">Chưa có tài khoản? Đăng ký</a></div>
             </div>
-            <div class="form-group">
-                <label>Khóa</label>
-                <select id="regCohort">
-                    <option value="K25">K25</option><option value="K26">K26</option>
-                    <option value="K27">K27</option><option value="K28">K28</option>
-                    <option value="K29">K29</option><option value="K30">K30</option>
-                </select>
-            </div>
-            <div class="form-group"><label>Mật khẩu <span class="required">*</span></label><input type="password" id="regPassword" placeholder="Ít nhất 6 ký tự" /></div>
-            <div class="form-group"><label>Xác nhận <span class="required">*</span></label><input type="password" id="regConfirm" placeholder="Nhập lại mật khẩu" /></div>
-            <div class="form-group"><div class="checkbox-group"><input type="checkbox" id="regTerms" /><label for="regTerms">Tôi đồng ý với quy định</label></div></div>
-            <div class="form-actions"><button class="btn btn-success" onclick="handleRegister()">Đăng ký</button></div>
-            <div class="login-links"><a onclick="switchAuthTab('login')">Đã có tài khoản? Đăng nhập</a></div>
-        </div>
-    </div>
-</div>
-
-<header>
-    <div class="container header-inner">
-        <div class="logo" onclick="showPage('home')">📚 VNU <span>Tài Liệu 0Đ</span></div>
-        <nav id="mainNav">
-            <a class="active-link" onclick="showPage('home')">Trang chủ</a>
-            <a onclick="showPage('library')">Kho tài liệu</a>
-            <a onclick="showPage('contribute')">Đóng góp</a>
-            <a onclick="showPage('leaderboard')">BXH</a>
-            <a onclick="showPage('guidelines')">Hướng dẫn</a>
-            <a onclick="openModal()" id="navLoginBtn" class="login-btn">Đăng nhập</a>
-            <span class="profile-mini" id="profileMini">
-                <span class="pname" id="headerUserName">Nguyễn Văn A</span>
-                <button class="logout-btn" onclick="handleLogout()">Đăng xuất</button>
-            </span>
-        </nav>
-    </div>
-</header>
-
-<div class="page active" id="page-home">
-    <section class="hero">
-        <div class="container">
-            <h1>Chia sẻ tài liệu, kết nối tri thức</h1>
-            <p>Kho tài liệu học tập miễn phí dành cho sinh viên ĐHQG Hà Nội.<br/>Giáo trình, đề thi, slide bài giảng từ cộng đồng các đơn vị trực thuộc.</p>
-            <div class="btn-group">
-                <button class="btn btn-white" onclick="showPage('library')">🔍 Khám phá</button>
-                <button class="btn btn-outline" onclick="showPage('contribute')">📤 Đóng góp</button>
-            </div>
-        </div>
-    </section>
-    <div class="container">
-        <div class="stats">
-            <div class="item"><div class="number" id="statDocs">0</div><div class="label">📄 Tài liệu</div></div>
-            <div class="item"><div class="number" id="statUnis">0</div><div class="label">🏛️ Đơn vị</div></div>
-            <div class="item"><div class="number" id="statUsers">0</div><div class="label">👥 Sinh viên sử dụng</div></div>
-        </div>
-        <section>
-            <div class="section-title"><span>📖 Môn học nổi bật</span><a onclick="showPage('library')">Xem tất cả →</a></div>
-            <div class="subject-grid" id="subjectGrid"></div>
-        </section>
-        <section>
-            <div class="section-title"><span>📄 Tài liệu mới nhất</span><a onclick="showPage('library')">Xem tất cả →</a></div>
-            <div class="doc-grid" id="homeDocGrid"></div>
-        </section>
-    </div>
-</div>
-
-<div class="page page-bg" id="page-library">
-    <div class="container">
-        <h2 class="page-title">📂 Kho tài liệu</h2>
-        <p class="page-sub">Tìm kiếm và lọc tài liệu theo đơn vị, khoa, môn học</p>
-        <div class="filter-bar">
-            <div class="filter-group"><label>Từ khóa:</label><input type="text" id="searchKeyword" placeholder="Tìm tên, môn..." style="min-width:140px;" /></div>
-            <div class="filter-group">
-                <label>Đơn vị:</label>
-                <select id="filterUni" onchange="updateFilterFaculties()"><option value="">Tất cả</option></select>
-            </div>
-            <div class="filter-group">
-                <label>Khoa:</label>
-                <select id="filterFaculty"><option value="">Tất cả</option></select>
-            </div>
-            <div class="filter-group">
-                <label>Loại:</label>
-                <div class="checkbox-group" id="filterTypeGroup">
-                    <label><input type="checkbox" value="PDF" checked /> PDF</label>
-                    <label><input type="checkbox" value="DOC" checked /> DOC</label>
-                    <label><input type="checkbox" value="PPT" checked /> PPT</label>
-                    <label><input type="checkbox" value="ZIP" checked /> ZIP</label>
-                </div>
-            </div>
-            <div class="filter-actions">
-                <button class="btn btn-primary" onclick="applyFilters()">🔍 Tìm</button>
-                <button class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="resetFilters()">Đặt lại</button>
-            </div>
-        </div>
-        <div class="doc-grid" id="libraryDocGrid"></div>
-    </div>
-</div>
-
-<div class="page page-bg" id="page-detail">
-    <div class="container"><div class="doc-detail" id="docDetailContainer"></div></div>
-</div>
-
-<div class="page page-bg" id="page-contribute">
-    <div class="container">
-        <div class="form-card">
-            <h2>📤 Đóng góp tài liệu</h2>
-            <p class="sub">Chia sẻ tài liệu của bạn với cộng đồng VNU</p>
-            <form id="contributeForm" onsubmit="handleContribute(event)">
-                <div class="form-group"><label>Tên tài liệu <span class="required">*</span></label><input type="text" id="docTitle" placeholder="Ví dụ: Slide Nhập môn AI" required /></div>
+            <!-- Đăng ký -->
+            <div class="modal-form" id="registerForm">
+                <div class="form-group"><label>Họ tên <span class="required">*</span></label><input type="text" id="regName" placeholder="Nguyễn Văn A" /></div>
+                <div class="form-group"><label>Mã sinh viên <span class="required">*</span></label><input type="text" id="regStudentId" placeholder="22000000" /></div>
+                <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="regEmail" placeholder="example@vnu.edu.vn" /></div>
                 <div class="form-group">
                     <label>Đơn vị <span class="required">*</span></label>
-                    <select id="docUni" required onchange="updateContributeFaculties()"><option value="">-- Chọn đơn vị --</option></select>
+                    <select id="regUniversity"><option value="">-- Chọn đơn vị --</option></select>
                 </div>
                 <div class="form-group">
                     <label>Khoa/Viện <span class="required">*</span></label>
-                    <select id="docFaculty" required><option value="">-- Chọn khoa --</option></select>
+                    <select id="regFaculty"><option value="">-- Chọn khoa --</option></select>
                 </div>
                 <div class="form-group">
-                    <label>Môn học <span class="required">*</span></label>
-                    <input type="text" id="docSubject" placeholder="Nhập tên môn học (có thể thêm mới)" required />
-                </div>
-                <div class="form-group">
-                    <label>Loại tài liệu <span class="required">*</span></label>
-                    <select id="docType" required>
-                        <option value="">-- Chọn loại --</option>
-                        <option value="PDF">PDF</option><option value="DOC">DOC</option>
-                        <option value="PPT">PPT</option><option value="ZIP">ZIP</option>
+                    <label>Khóa</label>
+                    <select id="regCohort">
+                        <option value="K25">K25</option><option value="K26">K26</option>
+                        <option value="K27">K27</option><option value="K28">K28</option>
+                        <option value="K29">K29</option><option value="K30">K30</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Mô tả ngắn</label><textarea id="docDesc" placeholder="Mô tả nội dung..." maxlength="200"></textarea><div class="hint">Tối đa 200 ký tự</div></div>
-                <div class="form-group"><label>Từ khóa</label><input type="text" id="docTags" placeholder="Ví dụ: AI, lập trình" /></div>
-                <div class="form-group"><label>File <span class="required">*</span></label><input type="file" id="docFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip" required /><div class="hint">Hỗ trợ: PDF, DOC, PPT, ZIP (tối đa 50MB)</div></div>
-                <div class="form-group"><div class="checkbox-group"><input type="checkbox" id="docTerms" required /><label for="docTerms">Tôi đồng ý với quy định đóng góp</label></div></div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-success">📤 Gửi tài liệu</button>
-                    <button type="button" class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="resetContributeForm()">Hủy</button>
-                </div>
-            </form>
+                <div class="form-group"><label>Mật khẩu <span class="required">*</span></label><input type="password" id="regPassword" placeholder="Ít nhất 6 ký tự" /></div>
+                <div class="form-group"><label>Xác nhận <span class="required">*</span></label><input type="password" id="regConfirm" placeholder="Nhập lại mật khẩu" /></div>
+                <div class="form-group"><div class="checkbox-group"><input type="checkbox" id="regTerms" /><label for="regTerms">Tôi đồng ý với quy định</label></div></div>
+                <div class="form-actions"><button class="btn btn-success" onclick="handleRegister()">Đăng ký</button></div>
+                <div class="login-links"><a onclick="switchAuthTab('login')">Đã có tài khoản? Đăng nhập</a></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="page page-bg" id="page-leaderboard">
-    <div class="container">
-        <h2 class="page-title">🏆 Bảng xếp hạng</h2>
-        <p class="page-sub">Những người đóng góp tích cực và môn học hot nhất</p>
-        <div class="two-col">
-            <div><h3 style="margin-bottom:12px;color:#0a3d62;">👤 Top người đóng góp</h3><div class="leaderboard-table" id="contributorRank"></div></div>
-            <div><h3 style="margin-bottom:12px;color:#0a3d62;">📚 Top môn học được tải nhiều</h3><div class="leaderboard-table" id="subjectRank"></div></div>
+    <!-- ===== MODAL XEM TRƯỚC TÀI LIỆU ===== -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal-box" style="max-width:600px;">
+            <button class="modal-close" onclick="closePreview()">✕</button>
+            <h2 id="previewTitle">📄 Tên tài liệu</h2>
+            <div class="sub" id="previewMeta">Tác giả • Ngày đăng</div>
+            <div class="preview-content" id="previewContent">
+                <div class="file-icon" id="previewIcon">📄</div>
+                <div class="file-info" id="previewInfo">Nội dung xem trước sẽ hiển thị ở đây.</div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-success" id="previewDownloadBtn" onclick="downloadFromPreview()">📥 Tải xuống</button>
+                <button class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="closePreview()">Đóng</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="page page-bg" id="page-guidelines">
-    <div class="container">
-        <h2 class="page-title">📖 Hướng dẫn & Quy định</h2>
-        <p class="page-sub">Tìm hiểu cách sử dụng và đóng góp cho VNU Tài Liệu 0Đ</p>
-        <section>
-            <div class="section-title" style="font-size:18px;">📌 Hướng dẫn sử dụng</div>
-            <div class="guide-step"><div class="num">1</div><div class="content"><h4>🔍 Tìm kiếm tài liệu</h4><p>Nhập từ khóa hoặc lọc theo Đơn vị → Khoa → loại file để tìm nhanh.</p></div></div>
-            <div class="guide-step"><div class="num">2</div><div class="content"><h4>📥 Tải tài liệu</h4><p>Click vào thẻ tài liệu để xem chi tiết và tải về máy.</p></div></div>
-            <div class="guide-step"><div class="num">3</div><div class="content"><h4>📤 Đóng góp</h4><p>Điền đầy đủ thông tin (có thể thêm môn học mới) và upload file.</p></div></div>
-            <div class="guide-step"><div class="num">4</div><div class="content"><h4>⭐ Đánh giá</h4><p>Đánh giá sao và bình luận để giúp cộng đồng chọn tài liệu chất lượng.</p></div></div>
-        </section>
-        <section>
-            <div class="section-title" style="font-size:18px;">⚖️ Quy định</div>
-            <div class="rules-grid">
-                <div class="rules-box"><h4>📤 Quy định đóng góp</h4>
-                    <ul><li>File đúng định dạng PDF, DOC, PPT, ZIP</li><li>Nội dung liên quan đến chương trình học tại VNU</li><li>Không chứa virus hay phần mềm độc hại</li><li>Không vi phạm bản quyền</li><li>Tài liệu còn giá trị sử dụng</li><li>Điền đầy đủ thông tin mô tả</li></ul>
-                </div>
-                <div class="rules-box"><h4>📥 Quy định sử dụng</h4>
-                    <ul><li>Tải tài liệu phục vụ học tập cá nhân</li><li>Không sử dụng cho mục đích thương mại</li><li>Tôn trọng người đóng góp</li><li>Báo cáo vi phạm nếu phát hiện</li></ul>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo" onclick="showPage('home')">📚 VNU <span>Tài Liệu 0Đ</span></div>
+            <nav id="mainNav">
+                <a class="active-link" onclick="showPage('home')">Trang chủ</a>
+                <a onclick="showPage('library')">Kho tài liệu</a>
+                <a onclick="showPage('contribute')">Đóng góp</a>
+                <a onclick="showPage('leaderboard')">BXH</a>
+                <a onclick="showPage('guidelines')">Hướng dẫn</a>
+                <a onclick="openModal()" id="navLoginBtn" class="login-btn">Đăng nhập</a>
+                <span class="profile-mini" id="profileMini">
+                    <span class="pname" id="headerUserName">Nguyễn Văn A</span>
+                    <button class="logout-btn" onclick="handleLogout()">Đăng xuất</button>
+                </span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== TRANG CHỦ ===== -->
+    <div class="page active" id="page-home">
+        <section class="hero">
+            <div class="container">
+                <h1>Chia sẻ tài liệu, kết nối tri thức</h1>
+                <p>Kho tài liệu học tập miễn phí dành cho sinh viên ĐHQG Hà Nội.<br/>Giáo trình, đề thi, slide bài giảng từ cộng đồng các đơn vị trực thuộc.</p>
+                <div class="btn-group">
+                    <button class="btn btn-white" onclick="showPage('library')">🔍 Khám phá</button>
+                    <button class="btn btn-outline" onclick="showPage('contribute')">📤 Đóng góp</button>
                 </div>
             </div>
         </section>
-    </div>
-</div>
-
-<footer style="background:#0a1e2f;color:#cbd5e1;padding:32px 0 20px;margin-top:20px;">
-    <div class="container">
-        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;">
-            <div><div style="font-size:20px;font-weight:700;color:white;">📚 VNU <span style="color:#5ba9c9;">Tài Liệu 0Đ</span></div>
-            <div style="font-size:14px;margin-top:2px;">Chia sẻ tri thức – Đồng hành sinh viên</div>
-            <div style="font-size:13px;margin-top:6px;color:#94a3b8;">📧 contact@vnutaileu0d.edu.vn</div></div>
-            <div style="font-size:14px;color:#94a3b8;display:flex;flex-direction:column;gap:4px;">
-                <a onclick="showPage('guidelines')" style="cursor:pointer;">📌 Quy định sử dụng</a>
-                <a onclick="showPage('guidelines')" style="cursor:pointer;">📌 Hướng dẫn đóng góp</a>
-                <a onclick="showPage('home')" style="cursor:pointer;">📌 Giới thiệu</a>
+        <div class="container">
+            <div class="stats">
+                <div class="item"><div class="number" id="statDocs">0</div><div class="label">📄 Tài liệu</div></div>
+                <div class="item"><div class="number" id="statUnis">0</div><div class="label">🏛️ Đơn vị</div></div>
+                <div class="item"><div class="number" id="statUsers">0</div><div class="label">👥 Sinh viên sử dụng</div></div>
             </div>
+            <section>
+                <div class="section-title"><span>📖 Môn học nổi bật</span><a onclick="showPage('library')">Xem tất cả →</a></div>
+                <div class="subject-grid" id="subjectGrid"></div>
+            </section>
+            <section>
+                <div class="section-title"><span>📄 Tài liệu mới nhất</span><a onclick="showPage('library')">Xem tất cả →</a></div>
+                <div class="doc-grid" id="homeDocGrid"></div>
+            </section>
         </div>
-        <div style="border-top:1px solid #1e3a4f;padding-top:16px;margin-top:16px;text-align:center;font-size:13px;color:#94a3b8;">© 2026 VNU Tài Liệu 0 Đồng.</div>
     </div>
-</footer>
 
-<script>
-// ============================================================
-// CẤU TRÚC ĐƠN VỊ
-// ============================================================
-const vnuStructure = {
-    'UET': { name: 'ĐH Công nghệ', faculties: ['Công nghệ Thông tin', 'Điện tử - Viễn thông', 'Vật lý Kỹ thuật', 'Cơ học Kỹ thuật', 'Kỹ thuật Y sinh'] },
-    'HUS': { name: 'ĐH Khoa học Tự nhiên', faculties: ['Toán - Cơ - Tin học', 'Vật lý', 'Hóa học', 'Sinh học', 'Địa chất', 'Môi trường', 'Công nghệ Sinh học'] },
-    'USSH': { name: 'ĐH KHXH & Nhân văn', faculties: ['Lịch sử', 'Văn học', 'Triết học', 'Tâm lý học', 'Xã hội học', 'Báo chí - Truyền thông', 'Đông phương học', 'Quan hệ quốc tế', 'Nhân học'] },
-    'UEB': { name: 'ĐH Kinh tế', faculties: ['Kinh tế học', 'Quản trị Kinh doanh', 'Tài chính - Ngân hàng', 'Kế toán - Kiểm toán', 'Kinh tế phát triển', 'Thương mại quốc tế', 'Kinh tế chính trị'] },
-    'ULIS': { name: 'ĐH Ngoại ngữ', faculties: ['Tiếng Anh', 'Tiếng Nga', 'Tiếng Pháp', 'Tiếng Trung', 'Tiếng Nhật', 'Tiếng Đức', 'Tiếng Hàn', 'Ngôn ngữ học', 'Tiếng Tây Ban Nha'] },
-    'UL': { name: 'ĐH Luật', faculties: ['Luật Hành chính', 'Luật Dân sự', 'Luật Hình sự', 'Luật Quốc tế', 'Luật Kinh doanh', 'Luật Môi trường'] },
-    'UMP': { name: 'ĐH Y Dược', faculties: ['Y học cơ sở', 'Y học lâm sàng', 'Dược học', 'Y tế công cộng', 'Điều dưỡng - Kỹ thuật y học', 'Răng - Hàm - Mặt'] },
-    'UEd': { name: 'ĐH Giáo dục', faculties: ['Giáo dục học', 'Tâm lý giáo dục', 'Quản lý giáo dục', 'Giáo dục tiểu học', 'Giáo dục đặc biệt', 'Giáo dục mầm non'] },
-    'VJU': { name: 'ĐH Việt Nhật', faculties: ['Công nghệ', 'Khoa học môi trường', 'Khoa học xã hội', 'Ngôn ngữ và Văn hóa Nhật Bản'] },
-    'SIS': { name: 'Trường Khoa học liên ngành và Nghệ thuật', faculties: ['Khoa học liên ngành', 'Nghệ thuật', 'Truyền thông', 'Khoa học xã hội ứng dụng'] },
-    'HSB': { name: 'Trường Quản trị và Kinh doanh', faculties: ['Quản trị kinh doanh', 'Tài chính', 'Marketing', 'Quản trị nhân lực'] },
-    'IS': { name: 'Trường Quốc tế', faculties: ['Quản trị Kinh doanh quốc tế', 'Tài chính quốc tế', 'Ngôn ngữ Anh', 'Quan hệ quốc tế', 'Công nghệ thông tin'] },
-    'IFI': { name: 'Khoa Quốc tế Pháp ngữ', faculties: ['Khoa học máy tính', 'Kinh tế', 'Quản lý', 'Khoa học xã hội'] }
-};
-
-const unitCodes = Object.keys(vnuStructure);
-
-// ============================================================
-// DỮ LIỆU MẪU – TÀI LIỆU
-// ============================================================
-const defaultDocs = [
-    { id:1, title:'Slide Nhập môn AI - UET', uni:'UET', faculty:'Công nghệ Thông tin', subject:'Nhập môn AI', type:'PDF', desc:'Bài giảng chương 1-3 về AI cơ bản.', tags:'AI, lập trình', author:'Nguyễn Minh Anh', date:'2026-06-14', stars:4.8, ratings:42, downloads:1200 },
-    { id:2, title:'Đề thi Xác suất - HUS', uni:'HUS', faculty:'Toán - Cơ - Tin học', subject:'Xác suất thống kê', type:'DOC', desc:'Đề thi cuối kỳ Xác suất thống kê năm 2025.', tags:'đề thi, xác suất', author:'Phạm Thị Thanh Hương', date:'2026-06-10', stars:4.6, ratings:28, downloads:850 },
-    { id:3, title:'IELTS Writing Band 8+', uni:'ULIS', faculty:'Tiếng Anh', subject:'IELTS Academic', type:'PPT', desc:'Chiến thuật viết IELTS band 8+.', tags:'IELTS, writing', author:'Trần Thị Bích Ngọc', date:'2026-06-05', stars:4.9, ratings:56, downloads:2400 },
-    { id:4, title:'Giáo trình Kinh tế vi mô - UEB', uni:'UEB', faculty:'Kinh tế học', subject:'Kinh tế vi mô', type:'PDF', desc:'Giáo trình đầy đủ Kinh tế vi mô.', tags:'giáo trình, kinh tế', author:'Lê Văn Hùng', date:'2026-06-02', stars:4.7, ratings:35, downloads:1800 },
-    { id:5, title:'Luận văn mẫu AI - UET', uni:'UET', faculty:'Công nghệ Thông tin', subject:'Nhập môn AI', type:'ZIP', desc:'Luận văn về ứng dụng AI nhận dạng ảnh.', tags:'AI, luận văn', author:'Hoàng Văn Đức', date:'2026-05-28', stars:4.5, ratings:22, downloads:540 },
-    { id:6, title:'Slide Giải tích Chương 4-6', uni:'HUS', faculty:'Toán - Cơ - Tin học', subject:'Giải tích', type:'PDF', desc:'Bài giảng tích phân và chuỗi số.', tags:'giải tích, toán', author:'Phạm Thị Thanh Hương', date:'2026-05-20', stars:4.4, ratings:18, downloads:720 },
-    { id:7, title:'Luật Dân sự - Tóm tắt', uni:'UL', faculty:'Luật Dân sự', subject:'Luật Dân sự', type:'PDF', desc:'Tóm tắt nội dung Luật Dân sự 2025.', tags:'luật, dân sự', author:'Vũ Đình Quang', date:'2026-05-15', stars:4.3, ratings:14, downloads:430 },
-    { id:8, title:'Tâm lý học đại cương - USSH', uni:'USSH', faculty:'Tâm lý học', subject:'Tâm lý học đại cương', type:'PPT', desc:'Slide bài giảng Tâm lý học đại cương.', tags:'tâm lý, xã hội', author:'Bùi Thị Mai Lan', date:'2026-05-10', stars:4.2, ratings:20, downloads:380 },
-    { id:9, title:'Nguyên lý kế toán - Bài tập', uni:'UEB', faculty:'Kế toán - Kiểm toán', subject:'Nguyên lý kế toán', type:'DOC', desc:'Hệ thống bài tập có lời giải.', tags:'kế toán, bài tập', author:'Lê Văn Hùng', date:'2026-05-05', stars:4.6, ratings:25, downloads:610 },
-    { id:10, title:'Mạng máy tính - Giao thức', uni:'UET', faculty:'Công nghệ Thông tin', subject:'Mạng máy tính', type:'PDF', desc:'Tổng hợp các giao thức mạng quan trọng.', tags:'mạng, giao thức', author:'Nguyễn Minh Anh', date:'2026-04-28', stars:4.5, ratings:19, downloads:490 }
-];
-
-// ============================================================
-// DỮ LIỆU MẪU – NGƯỜI DÙNG
-// ============================================================
-const defaultUsers = [
-    { name: 'Nguyễn Minh Anh', studentId: '22010001', email: 'anh.nguyen@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 45 },
-    { name: 'Trần Thị Bích Ngọc', studentId: '22020002', email: 'ngoc.tran@vnu.edu.vn', uni: 'ULIS', faculty: 'Tiếng Anh', cohort: 'K27', password: '123456', contributed: 38 },
-    { name: 'Lê Văn Hùng', studentId: '22030003', email: 'hung.le@vnu.edu.vn', uni: 'UEB', faculty: 'Kinh tế học', cohort: 'K26', password: '123456', contributed: 32 },
-    { name: 'Phạm Thị Thanh Hương', studentId: '22040004', email: 'huong.pham@vnu.edu.vn', uni: 'HUS', faculty: 'Toán - Cơ - Tin học', cohort: 'K28', password: '123456', contributed: 25 },
-    { name: 'Hoàng Văn Đức', studentId: '22050005', email: 'duc.hoang@vnu.edu.vn', uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 20 },
-    { name: 'Bùi Thị Mai Lan', studentId: '22060006', email: 'lan.bui@vnu.edu.vn', uni: 'USSH', faculty: 'Tâm lý học', cohort: 'K29', password: '123456', contributed: 18 },
-    { name: 'Vũ Đình Quang', studentId: '22070007', email: 'quang.vu@vnu.edu.vn', uni: 'UL', faculty: 'Luật Dân sự', cohort: 'K27', password: '123456', contributed: 22 },
-    { name: 'Đặng Thị Thu Trang', studentId: '22080008', email: 'trang.dang@vnu.edu.vn', uni: 'UMP', faculty: 'Dược học', cohort: 'K28', password: '123456', contributed: 15 },
-    { name: 'Ngô Xuân Thành', studentId: '22090009', email: 'thanh.ngo@vnu.edu.vn', uni: 'UEd', faculty: 'Quản lý giáo dục', cohort: 'K27', password: '123456', contributed: 12 },
-    { name: 'Chu Thị Hồng Nhung', studentId: '22100010', email: 'nhung.chu@vnu.edu.vn', uni: 'IS', faculty: 'Quản trị Kinh doanh quốc tế', cohort: 'K26', password: '123456', contributed: 14 }
-];
-
-// ============================================================
-// DỮ LIỆU ĐÁNH GIÁ MẪU
-// ============================================================
-const defaultReviews = {};
-defaultDocs.forEach(doc => {
-    defaultReviews[doc.id] = [
-        { user: 'Nguyễn Minh Anh', rating: 5, text: 'Rất hữu ích, cảm ơn bạn!', date: '15/06/2026' },
-        { user: 'Trần Thị Bích Ngọc', rating: 4, text: 'Tài liệu chất lượng tốt.', date: '14/06/2026' },
-        { user: 'Lê Văn Hùng', rating: 5, text: 'Mong có thêm nhiều tài liệu hay hơn.', date: '13/06/2026' }
-    ];
-});
-
-// ============================================================
-// KHỞI TẠO LƯU TRỮ
-// ============================================================
-function initStorage() {
-    // Tài liệu
-    if (!localStorage.getItem('vnu_docs')) {
-        localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
-    }
-    // Người dùng
-    if (!localStorage.getItem('vnu_users')) {
-        localStorage.setItem('vnu_users', JSON.stringify(defaultUsers));
-    }
-    // Đánh giá
-    if (!localStorage.getItem('vnu_reviews')) {
-        localStorage.setItem('vnu_reviews', JSON.stringify(defaultReviews));
-    }
-    // Người dùng hiện tại
-    if (!localStorage.getItem('vnu_current_user')) {
-        localStorage.removeItem('vnu_current_user');
-    }
-}
-initStorage();
-
-// ============================================================
-// BIẾN TOÀN CỤC
-// ============================================================
-let docs = JSON.parse(localStorage.getItem('vnu_docs'));
-let users = JSON.parse(localStorage.getItem('vnu_users'));
-let reviews = JSON.parse(localStorage.getItem('vnu_reviews'));
-let currentUser = JSON.parse(localStorage.getItem('vnu_current_user')) || null;
-
-// ============================================================
-// HÀM TIỆN ÍCH
-// ============================================================
-function getUniName(code) { return vnuStructure[code]?.name || code; }
-function getFaculties(code) { return vnuStructure[code]?.faculties || []; }
-
-function showToast(msg, type='info') {
-    const c = document.getElementById('toastContainer');
-    const t = document.createElement('div');
-    t.className = `toast ${type}`;
-    t.textContent = msg;
-    c.appendChild(t);
-    setTimeout(() => {
-        t.style.opacity = '0';
-        t.style.transform = 'translateX(40px)';
-        t.style.transition = '0.3s';
-        setTimeout(() => t.remove(), 300);
-    }, 3000);
-}
-
-function formatDate(ds) {
-    const d = new Date(ds);
-    const now = new Date();
-    const diff = Math.floor((now - d) / (1000*60*60*24));
-    if (diff===0) return 'Hôm nay';
-    if (diff===1) return 'Hôm qua';
-    if (diff<7) return diff+' ngày trước';
-    return diff+' ngày trước';
-}
-function formatNumber(n) {
-    if (n>=1000) return (n/1000).toFixed(1)+'K';
-    return n;
-}
-
-function renderDocCards(list) {
-    if (!list || list.length===0) return '<p style="text-align:center;padding:40px;color:#94a3b8;">Không có tài liệu nào.</p>';
-    return list.map(d => `
-        <div class="doc-card" onclick="showDetail(${d.id})">
-            <span class="badge ${d.type.toLowerCase()}">${d.type}</span>
-            <h4>${d.title}</h4>
-            <div class="meta"><span class="uni">${getUniName(d.uni)}</span> • ${d.faculty}</div>
-            <div class="meta">${d.subject}</div>
-            <div class="footer">
-                <span class="stars">⭐ ${d.stars.toFixed(1)}</span>
-                <span class="downloads">⬇️ ${formatNumber(d.downloads)}</span>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ============================================================
-// ĐIỀU HƯỚNG
-// ============================================================
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    const target = document.getElementById('page-'+pageId);
-    if (target) target.classList.add('active');
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
-    const links = document.querySelectorAll('nav a');
-    const map = { home:0, library:1, contribute:2, leaderboard:3, guidelines:4 };
-    if (map[pageId] !== undefined && links[map[pageId]]) links[map[pageId]].classList.add('active-link');
-    if (pageId==='home') renderHome();
-    if (pageId==='library') renderLibrary(docs);
-    if (pageId==='leaderboard') renderLeaderboard();
-    updateNavUI();
-    window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// ============================================================
-// ĐĂNG NHẬP / ĐĂNG KÝ (ĐÃ SỬA LỖI)
-// ============================================================
-function openModal() { document.getElementById('authModal').classList.add('active'); switchAuthTab('login'); }
-function closeModal() { document.getElementById('authModal').classList.remove('active'); }
-document.getElementById('authModal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
-
-function switchAuthTab(tab) {
-    document.querySelectorAll('.modal-tabs button').forEach(b=>b.classList.remove('active-tab'));
-    document.querySelectorAll('.modal-form').forEach(f=>f.classList.remove('active-form'));
-    if (tab==='login') {
-        document.querySelector('.modal-tabs button:first-child').classList.add('active-tab');
-        document.getElementById('loginForm').classList.add('active-form');
-    } else {
-        document.querySelector('.modal-tabs button:last-child').classList.add('active-tab');
-        document.getElementById('registerForm').classList.add('active-form');
-    }
-}
-
-function populateUnitSelects() {
-    const selects = ['regUniversity','filterUni','docUni'];
-    selects.forEach(id => {
-        const sel = document.getElementById(id);
-        if (!sel) return;
-        const first = sel.options[0];
-        sel.innerHTML = '';
-        if (first) sel.appendChild(first);
-        unitCodes.forEach(code => {
-            const opt = document.createElement('option');
-            opt.value = code;
-            opt.textContent = getUniName(code);
-            sel.appendChild(opt);
-        });
-    });
-}
-populateUnitSelects();
-
-// Khi chọn đơn vị ở form đăng ký → cập nhật khoa
-document.getElementById('regUniversity').addEventListener('change', function() {
-    const uni = this.value;
-    const sel = document.getElementById('regFaculty');
-    sel.innerHTML = '<option value="">-- Chọn khoa --</option>';
-    if (uni) {
-        getFaculties(uni).forEach(f => {
-            const opt = document.createElement('option');
-            opt.value = f;
-            opt.textContent = f;
-            sel.appendChild(opt);
-        });
-    }
-});
-
-function updateFilterFaculties() {
-    const uni = document.getElementById('filterUni').value;
-    const sel = document.getElementById('filterFaculty');
-    sel.innerHTML = '<option value="">Tất cả</option>';
-    if (uni) {
-        getFaculties(uni).forEach(f => {
-            const opt = document.createElement('option');
-            opt.value = f;
-            opt.textContent = f;
-            sel.appendChild(opt);
-        });
-    }
-}
-
-function updateContributeFaculties() {
-    const uni = document.getElementById('docUni').value;
-    const sel = document.getElementById('docFaculty');
-    sel.innerHTML = '<option value="">-- Chọn khoa --</option>';
-    if (uni) {
-        getFaculties(uni).forEach(f => {
-            const opt = document.createElement('option');
-            opt.value = f;
-            opt.textContent = f;
-            sel.appendChild(opt);
-        });
-    }
-}
-
-// === ĐĂNG KÝ (ĐÃ SỬA LỖI) ===
-function handleRegister() {
-    const name = document.getElementById('regName').value.trim();
-    const sid = document.getElementById('regStudentId').value.trim();
-    const email = document.getElementById('regEmail').value.trim();
-    const uni = document.getElementById('regUniversity').value;
-    const faculty = document.getElementById('regFaculty').value;
-    const cohort = document.getElementById('regCohort').value;
-    const pass = document.getElementById('regPassword').value;
-    const confirm = document.getElementById('regConfirm').value;
-    const terms = document.getElementById('regTerms').checked;
-
-    // Kiểm tra từng trường
-    if (!name) { showToast('Vui lòng nhập họ tên','error'); return; }
-    if (!sid) { showToast('Vui lòng nhập mã sinh viên','error'); return; }
-    if (!email) { showToast('Vui lòng nhập email','error'); return; }
-    if (!uni) { showToast('Vui lòng chọn đơn vị','error'); return; }
-    if (!faculty) { showToast('Vui lòng chọn khoa','error'); return; }
-    if (pass.length < 6) { showToast('Mật khẩu phải có ít nhất 6 ký tự','error'); return; }
-    if (pass !== confirm) { showToast('Mật khẩu xác nhận không khớp','error'); return; }
-    if (!terms) { showToast('Vui lòng đồng ý với điều khoản','error'); return; }
-
-    // Kiểm tra trùng email hoặc mã SV
-    if (users.find(u => u.email === email)) {
-        showToast('Email đã được đăng ký','error');
-        return;
-    }
-    if (users.find(u => u.studentId === sid)) {
-        showToast('Mã sinh viên đã được đăng ký','error');
-        return;
-    }
-
-    // Tạo user mới
-    const newUser = {
-        name, studentId: sid, email,
-        uni, faculty, cohort,
-        password: pass,
-        contributed: 0
-    };
-
-    users.push(newUser);
-    localStorage.setItem('vnu_users', JSON.stringify(users));
-
-    // Tự động đăng nhập sau khi đăng ký
-    currentUser = newUser;
-    localStorage.setItem('vnu_current_user', JSON.stringify(newUser));
-
-    closeModal();
-    updateNavUI();
-    renderHome();
-    showToast('🎉 Đăng ký thành công! Chào mừng ' + name, 'success');
-}
-
-// === ĐĂNG NHẬP ===
-function handleLogin() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const pass = document.getElementById('loginPassword').value.trim();
-
-    if (!email) { showToast('Vui lòng nhập email hoặc mã SV','error'); return; }
-    if (!pass) { showToast('Vui lòng nhập mật khẩu','error'); return; }
-
-    const user = users.find(u => (u.email === email || u.studentId === email) && u.password === pass);
-    if (!user) {
-        showToast('Sai email/mã SV hoặc mật khẩu','error');
-        return;
-    }
-
-    currentUser = user;
-    localStorage.setItem('vnu_current_user', JSON.stringify(user));
-    closeModal();
-    updateNavUI();
-    renderHome();
-    showToast('Chào mừng ' + user.name + '!', 'success');
-}
-
-function handleLogout() {
-    currentUser = null;
-    localStorage.removeItem('vnu_current_user');
-    updateNavUI();
-    renderHome();
-    showToast('Đã đăng xuất', 'info');
-}
-
-function updateNavUI() {
-    const loginBtn = document.getElementById('navLoginBtn');
-    const profile = document.getElementById('profileMini');
-    const uname = document.getElementById('headerUserName');
-    if (currentUser) {
-        loginBtn.style.display = 'none';
-        profile.classList.add('active');
-        uname.textContent = currentUser.name;
-    } else {
-        loginBtn.style.display = 'inline-block';
-        profile.classList.remove('active');
-    }
-}
-
-// ============================================================
-// TRANG CHỦ
-// ============================================================
-function renderHome() {
-    document.getElementById('statDocs').textContent = docs.length;
-    document.getElementById('statUnis').textContent = unitCodes.length;
-    document.getElementById('statUsers').textContent = users.length * 100 + 500;
-
-    const subjectCount = {};
-    docs.forEach(d => { subjectCount[d.subject] = (subjectCount[d.subject]||0)+1; });
-    const topSubjects = Object.entries(subjectCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
-    const grid = document.getElementById('subjectGrid');
-    grid.innerHTML = topSubjects.map(([sub,count]) => {
-        const docsInSubject = docs.filter(d => d.subject===sub);
-        const avg = docsInSubject.reduce((s,d)=>s+d.stars,0) / (docsInSubject.length || 1);
-        const uni = docsInSubject[0]?.uni || '';
-        return `<div class="subject-card" onclick="filterBySubject('${sub}')">
-            ${sub}
-            <span class="star">⭐ ${avg.toFixed(1)}</span>
-            <span class="uni-tag">${uni ? getUniName(uni) : ''}</span>
-        </div>`;
-    }).join('');
-
-    const recent = [...docs].sort((a,b)=>new Date(b.date)-new Date(a.date)).slice(0,4);
-    document.getElementById('homeDocGrid').innerHTML = renderDocCards(recent);
-}
-
-function filterBySubject(subject) {
-    showPage('library');
-    document.getElementById('searchKeyword').value = subject;
-    applyFilters();
-    window.scrollTo({top:0,behavior:'smooth'});
-}
-
-// ============================================================
-// KHO TÀI LIỆU
-// ============================================================
-function renderLibrary(list) {
-    const grid = document.getElementById('libraryDocGrid');
-    if (!list || list.length===0) {
-        grid.innerHTML = '<p style="text-align:center;padding:40px;color:#94a3b8;">Không tìm thấy tài liệu nào</p>';
-    } else {
-        grid.innerHTML = renderDocCards(list);
-    }
-}
-
-function applyFilters() {
-    const keyword = document.getElementById('searchKeyword').value.toLowerCase().trim();
-    const uni = document.getElementById('filterUni').value;
-    const faculty = document.getElementById('filterFaculty').value;
-    const types = [];
-    document.querySelectorAll('#filterTypeGroup input:checked').forEach(cb=>types.push(cb.value));
-
-    let filtered = docs;
-    if (keyword) filtered = filtered.filter(d =>
-        d.title.toLowerCase().includes(keyword) ||
-        d.subject.toLowerCase().includes(keyword) ||
-        d.tags.toLowerCase().includes(keyword)
-    );
-    if (uni) filtered = filtered.filter(d => d.uni===uni);
-    if (faculty) filtered = filtered.filter(d => d.faculty===faculty);
-    if (types.length) filtered = filtered.filter(d => types.includes(d.type));
-
-    renderLibrary(filtered);
-}
-
-function resetFilters() {
-    document.getElementById('searchKeyword').value = '';
-    document.getElementById('filterUni').value = '';
-    document.getElementById('filterFaculty').innerHTML = '<option value="">Tất cả</option>';
-    document.querySelectorAll('#filterTypeGroup input').forEach(cb=>cb.checked=true);
-    renderLibrary(docs);
-}
-
-// ============================================================
-// CHI TIẾT TÀI LIỆU
-// ============================================================
-function showDetail(id) {
-    const doc = docs.find(d=>d.id===id);
-    if (!doc) { showToast('Không tìm thấy tài liệu','error'); return; }
-    const container = document.getElementById('docDetailContainer');
-    const docReviews = reviews[id] || [];
-
-    container.innerHTML = `
-        <div class="doc-title">${doc.title}</div>
-        <div class="doc-meta">
-            <span>🏛️ ${getUniName(doc.uni)}</span>
-            <span>📚 ${doc.faculty}</span>
-            <span>📖 ${doc.subject}</span>
-            <span>👤 ${doc.author}</span>
-            <span>📅 ${doc.date}</span>
-            <span>⬇️ ${doc.downloads} lượt tải</span>
-        </div>
-        <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
-            <span style="font-size:20px;font-weight:700;">⭐ ${doc.stars.toFixed(1)}</span>
-            <span style="color:#64748b;">(${doc.ratings} đánh giá)</span>
-        </div>
-        <div class="doc-desc"><strong>📝 Mô tả:</strong> ${doc.desc || 'Chưa có mô tả'}</div>
-        <div class="doc-actions">
-            <button class="btn btn-success" onclick="downloadDoc(${doc.id})">📥 Tải xuống</button>
-            <button class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="showPage('library')">← Quay lại</button>
-        </div>
-        <div class="rating-section">
-            <h4>⭐ Đánh giá tài liệu</h4>
-            ${currentUser ? `
-                <div class="star-rating" id="starRating">
-                    ${[1,2,3,4,5].map(i=>`<span class="star" data-val="${i}" onclick="rateDoc(${doc.id},${i})">★</span>`).join('')}
+    <!-- ===== KHO TÀI LIỆU ===== -->
+    <div class="page page-bg" id="page-library">
+        <div class="container">
+            <h2 class="page-title">📂 Kho tài liệu</h2>
+            <p class="page-sub">Tìm kiếm và lọc tài liệu theo đơn vị, khoa, môn học</p>
+            <div class="filter-bar">
+                <div class="filter-group"><label>Từ khóa:</label><input type="text" id="searchKeyword" placeholder="Tìm tên, môn..." style="min-width:140px;" /></div>
+                <div class="filter-group">
+                    <label>Đơn vị:</label>
+                    <select id="filterUni" onchange="updateFilterFaculties()"><option value="">Tất cả</option></select>
                 </div>
-                <div class="form-group"><textarea id="reviewText" placeholder="Nhận xét của bạn..." style="width:100%;padding:10px;border:1px solid #d1d9e6;border-radius:8px;min-height:60px;"></textarea></div>
-                <button class="btn btn-primary" onclick="submitReview(${doc.id})">📩 Gửi đánh giá</button>
-            ` : `<p style="color:#64748b;font-size:14px;">Vui lòng <a href="#" onclick="openModal()" style="color:#2d7d9a;font-weight:600;">đăng nhập</a> để đánh giá.</p>`}
-            <div class="review-list">
-                ${docReviews.length > 0 ? docReviews.map(r => `
-                    <div class="review-item">
-                        <div class="review-header">
-                            <span class="name">${r.user}</span>
-                            <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
-                            <span>${r.date}</span>
-                        </div>
-                        <div class="review-text">${r.text || 'Không có bình luận'}</div>
+                <div class="filter-group">
+                    <label>Khoa:</label>
+                    <select id="filterFaculty"><option value="">Tất cả</option></select>
+                </div>
+                <div class="filter-group">
+                    <label>Loại:</label>
+                    <div class="checkbox-group" id="filterTypeGroup">
+                        <label><input type="checkbox" value="PDF" checked /> PDF</label>
+                        <label><input type="checkbox" value="DOC" checked /> DOC</label>
+                        <label><input type="checkbox" value="PPT" checked /> PPT</label>
+                        <label><input type="checkbox" value="ZIP" checked /> ZIP</label>
                     </div>
-                `).join('') : '<p style="color:#94a3b8;font-size:13px;padding:10px 0;">Chưa có đánh giá nào.</p>'}
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="applyFilters()">🔍 Tìm</button>
+                    <button class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="resetFilters()">Đặt lại</button>
+                </div>
+            </div>
+            <div class="doc-grid" id="libraryDocGrid"></div>
+        </div>
+    </div>
+
+    <!-- ===== CHI TIẾT ===== -->
+    <div class="page page-bg" id="page-detail">
+        <div class="container"><div class="doc-detail" id="docDetailContainer"></div></div>
+    </div>
+
+    <!-- ===== ĐÓNG GÓP ===== -->
+    <div class="page page-bg" id="page-contribute">
+        <div class="container">
+            <div class="form-card">
+                <h2>📤 Đóng góp tài liệu</h2>
+                <p class="sub">Chia sẻ tài liệu của bạn với cộng đồng VNU</p>
+                <form id="contributeForm" onsubmit="handleContribute(event)">
+                    <div class="form-group"><label>Tên tài liệu <span class="required">*</span></label><input type="text" id="docTitle" placeholder="Ví dụ: Slide Nhập môn AI" required /></div>
+                    <div class="form-group">
+                        <label>Đơn vị <span class="required">*</span></label>
+                        <select id="docUni" required onchange="updateContributeFaculties()"><option value="">-- Chọn đơn vị --</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Khoa/Viện <span class="required">*</span></label>
+                        <select id="docFaculty" required><option value="">-- Chọn khoa --</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Môn học <span class="required">*</span></label>
+                        <input type="text" id="docSubject" placeholder="Nhập tên môn học (có thể thêm mới)" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Loại tài liệu <span class="required">*</span></label>
+                        <select id="docType" required>
+                            <option value="">-- Chọn loại --</option>
+                            <option value="PDF">PDF</option><option value="DOC">DOC</option>
+                            <option value="PPT">PPT</option><option value="ZIP">ZIP</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Mô tả ngắn</label><textarea id="docDesc" placeholder="Mô tả nội dung..." maxlength="200"></textarea><div class="hint">Tối đa 200 ký tự</div></div>
+                    <div class="form-group"><label>Từ khóa</label><input type="text" id="docTags" placeholder="Ví dụ: AI, lập trình" /></div>
+                    <div class="form-group"><label>File <span class="required">*</span></label><input type="file" id="docFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.zip" required /><div class="hint">Hỗ trợ: PDF, DOC, PPT, ZIP (tối đa 50MB)</div></div>
+                    <div class="form-group"><div class="checkbox-group"><input type="checkbox" id="docTerms" required /><label for="docTerms">Tôi đồng ý với quy định đóng góp</label></div></div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">📤 Gửi tài liệu</button>
+                        <button type="button" class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="resetContributeForm()">Hủy</button>
+                    </div>
+                </form>
             </div>
         </div>
-    `;
-    showPage('detail');
-}
+    </div>
 
-let tempRating = 0;
-function rateDoc(id, val) {
-    tempRating = val;
-    document.querySelectorAll('#starRating .star').forEach((el,i) => {
-        el.classList.toggle('active', i<val);
-    });
-}
+    <!-- ===== BẢNG XẾP HẠNG ===== -->
+    <div class="page page-bg" id="page-leaderboard">
+        <div class="container">
+            <h2 class="page-title">🏆 Bảng xếp hạng</h2>
+            <p class="page-sub">Những người đóng góp tích cực và môn học hot nhất</p>
+            <div class="two-col">
+                <div><h3 style="margin-bottom:12px;color:#0a3d62;">👤 Top người đóng góp</h3><div class="leaderboard-table" id="contributorRank"></div></div>
+                <div><h3 style="margin-bottom:12px;color:#0a3d62;">📚 Top môn học được tải nhiều</h3><div class="leaderboard-table" id="subjectRank"></div></div>
+            </div>
+        </div>
+    </div>
 
-function submitReview(docId) {
-    if (!currentUser) { showToast('Vui lòng đăng nhập','error'); return; }
-    if (tempRating===0) { showToast('Chọn số sao bạn muốn đánh giá','error'); return; }
-    const text = document.getElementById('reviewText').value.trim();
+    <!-- ===== HƯỚNG DẪN ===== -->
+    <div class="page page-bg" id="page-guidelines">
+        <div class="container">
+            <h2 class="page-title">📖 Hướng dẫn & Quy định</h2>
+            <p class="page-sub">Tìm hiểu cách sử dụng và đóng góp cho VNU Tài Liệu 0Đ</p>
+            <section>
+                <div class="section-title" style="font-size:18px;">📌 Hướng dẫn sử dụng</div>
+                <div class="guide-step"><div class="num">1</div><div class="content"><h4>🔍 Tìm kiếm tài liệu</h4><p>Nhập từ khóa hoặc lọc theo Đơn vị → Khoa → loại file để tìm nhanh.</p></div></div>
+                <div class="guide-step"><div class="num">2</div><div class="content"><h4>📥 Xem trước & Tải</h4><p>Click vào thẻ tài liệu để xem thông tin. Click "Xem trước" để xem nội dung trước khi tải.</p></div></div>
+                <div class="guide-step"><div class="num">3</div><div class="content"><h4>📤 Đóng góp</h4><p>Điền đầy đủ thông tin (có thể thêm môn học mới) và upload file.</p></div></div>
+                <div class="guide-step"><div class="num">4</div><div class="content"><h4>⭐ Đánh giá</h4><p>Đánh giá sao và bình luận để giúp cộng đồng chọn tài liệu chất lượng.</p></div></div>
+            </section>
+            <section>
+                <div class="section-title" style="font-size:18px;">⚖️ Quy định</div>
+                <div class="rules-grid">
+                    <div class="rules-box"><h4>📤 Quy định đóng góp</h4>
+                        <ul><li>File đúng định dạng PDF, DOC, PPT, ZIP</li><li>Nội dung liên quan đến chương trình học tại VNU</li><li>Không chứa virus hay phần mềm độc hại</li><li>Không vi phạm bản quyền</li><li>Tài liệu còn giá trị sử dụng</li><li>Điền đầy đủ thông tin mô tả</li></ul>
+                    </div>
+                    <div class="rules-box"><h4>📥 Quy định sử dụng</h4>
+                        <ul><li>Tải tài liệu phục vụ học tập cá nhân</li><li>Không sử dụng cho mục đích thương mại</li><li>Tôn trọng người đóng góp</li><li>Báo cáo vi phạm nếu phát hiện</li></ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
-    if (!reviews[docId]) reviews[docId] = [];
-    reviews[docId].push({
-        user: currentUser.name,
-        rating: tempRating,
-        text: text || 'Người dùng đã đánh giá',
-        date: new Date().toLocaleDateString('vi-VN')
-    });
-    localStorage.setItem('vnu_reviews', JSON.stringify(reviews));
+    <footer style="background:#0a1e2f;color:#cbd5e1;padding:32px 0 20px;margin-top:20px;">
+        <div class="container">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+                <div><div style="font-size:20px;font-weight:700;color:white;">📚 VNU <span style="color:#5ba9c9;">Tài Liệu 0Đ</span></div>
+                    <div style="font-size:14px;margin-top:2px;">Chia sẻ tri thức – Đồng hành sinh viên</div>
+                    <div style="font-size:13px;margin-top:6px;color:#94a3b8;">📧 contact@vnutaileu0d.edu.vn</div></div>
+                <div style="font-size:14px;color:#94a3b8;display:flex;flex-direction:column;gap:4px;">
+                    <a onclick="showPage('guidelines')" style="cursor:pointer;">📌 Quy định sử dụng</a>
+                    <a onclick="showPage('guidelines')" style="cursor:pointer;">📌 Hướng dẫn đóng góp</a>
+                    <a onclick="showPage('home')" style="cursor:pointer;">📌 Giới thiệu</a>
+                </div>
+            </div>
+            <div style="border-top:1px solid #1e3a4f;padding-top:16px;margin-top:16px;text-align:center;font-size:13px;color:#94a3b8;">© 2026 VNU Tài Liệu 0 Đồng.</div>
+        </div>
+    </footer>
 
-    const doc = docs.find(d=>d.id===docId);
-    const allRatings = reviews[docId].map(r => r.rating);
-    const avg = allRatings.reduce((a,b)=>a+b,0) / allRatings.length;
-    doc.stars = Math.round(avg*10)/10;
-    doc.ratings = allRatings.length;
-    localStorage.setItem('vnu_docs', JSON.stringify(docs));
+    <script>
+        // ============================================================
+        // CẤU TRÚC ĐƠN VỊ
+        // ============================================================
+        const vnuStructure = {
+            'UET': { name: 'ĐH Công nghệ', faculties: ['Công nghệ Thông tin', 'Điện tử - Viễn thông', 'Vật lý Kỹ thuật', 'Cơ học Kỹ thuật',
+                    'Kỹ thuật Y sinh'
+                ] },
+            'HUS': { name: 'ĐH Khoa học Tự nhiên', faculties: ['Toán - Cơ - Tin học', 'Vật lý', 'Hóa học', 'Sinh học', 'Địa chất',
+                    'Môi trường', 'Công nghệ Sinh học'
+                ] },
+            'USSH': { name: 'ĐH KHXH & Nhân văn', faculties: ['Lịch sử', 'Văn học', 'Triết học', 'Tâm lý học', 'Xã hội học',
+                    'Báo chí - Truyền thông', 'Đông phương học', 'Quan hệ quốc tế', 'Nhân học'
+                ] },
+            'UEB': { name: 'ĐH Kinh tế', faculties: ['Kinh tế học', 'Quản trị Kinh doanh', 'Tài chính - Ngân hàng',
+                    'Kế toán - Kiểm toán', 'Kinh tế phát triển', 'Thương mại quốc tế', 'Kinh tế chính trị'
+                ] },
+            'ULIS': { name: 'ĐH Ngoại ngữ', faculties: ['Tiếng Anh', 'Tiếng Nga', 'Tiếng Pháp', 'Tiếng Trung', 'Tiếng Nhật',
+                    'Tiếng Đức', 'Tiếng Hàn', 'Ngôn ngữ học', 'Tiếng Tây Ban Nha'
+                ] },
+            'UL': { name: 'ĐH Luật', faculties: ['Luật Hành chính', 'Luật Dân sự', 'Luật Hình sự', 'Luật Quốc tế',
+                    'Luật Kinh doanh', 'Luật Môi trường'
+                ] },
+            'UMP': { name: 'ĐH Y Dược', faculties: ['Y học cơ sở', 'Y học lâm sàng', 'Dược học', 'Y tế công cộng',
+                    'Điều dưỡng - Kỹ thuật y học', 'Răng - Hàm - Mặt'
+                ] },
+            'UEd': { name: 'ĐH Giáo dục', faculties: ['Giáo dục học', 'Tâm lý giáo dục', 'Quản lý giáo dục', 'Giáo dục tiểu học',
+                    'Giáo dục đặc biệt', 'Giáo dục mầm non'
+                ] },
+            'VJU': { name: 'ĐH Việt Nhật', faculties: ['Công nghệ', 'Khoa học môi trường', 'Khoa học xã hội',
+                    'Ngôn ngữ và Văn hóa Nhật Bản'
+                ] },
+            'SIS': { name: 'Trường Khoa học liên ngành và Nghệ thuật', faculties: ['Khoa học liên ngành', 'Nghệ thuật',
+                    'Truyền thông', 'Khoa học xã hội ứng dụng'
+                ] },
+            'HSB': { name: 'Trường Quản trị và Kinh doanh', faculties: ['Quản trị kinh doanh', 'Tài chính', 'Marketing',
+                    'Quản trị nhân lực'
+                ] },
+            'IS': { name: 'Trường Quốc tế', faculties: ['Quản trị Kinh doanh quốc tế', 'Tài chính quốc tế', 'Ngôn ngữ Anh',
+                    'Quan hệ quốc tế', 'Công nghệ thông tin'
+                ] },
+            'IFI': { name: 'Khoa Quốc tế Pháp ngữ', faculties: ['Khoa học máy tính', 'Kinh tế', 'Quản lý', 'Khoa học xã hội'] }
+        };
 
-    showToast('Cảm ơn bạn đã đánh giá!','success');
-    tempRating = 0;
-    showDetail(docId);
-}
+        const unitCodes = Object.keys(vnuStructure);
 
-function downloadDoc(id) {
-    if (!currentUser) { showToast('Vui lòng đăng nhập để tải','error'); return; }
-    const doc = docs.find(d=>d.id===id);
-    if (!doc) return;
-    doc.downloads += 1;
-    localStorage.setItem('vnu_docs', JSON.stringify(docs));
-    showToast('Đang tải: '+doc.title,'success');
-    setTimeout(()=>showToast('✅ Đã tải '+doc.title,'success'),1200);
-}
+        // ============================================================
+        // DỮ LIỆU MẪU
+        // ============================================================
+        const defaultDocs = [
+            { id: 1, title: 'Slide Nhập môn AI - UET', uni: 'UET', faculty: 'Công nghệ Thông tin', subject: 'Nhập môn AI',
+                type: 'PDF', desc: 'Bài giảng chương 1-3 về AI cơ bản.', tags: 'AI, lập trình',
+                author: 'Nguyễn Minh Anh', date: '2026-06-14', stars: 4.8, ratings: 42, downloads: 1200,
+                preview: 'Nội dung xem trước: Slide bài giảng Nhập môn AI - Chương 1: Giới thiệu về Trí tuệ nhân tạo. Bao gồm định nghĩa, lịch sử phát triển và các ứng dụng cơ bản của AI trong đời sống.' },
+            { id: 2, title: 'Đề thi Xác suất - HUS', uni: 'HUS', faculty: 'Toán - Cơ - Tin học',
+                subject: 'Xác suất thống kê', type: 'DOC', desc: 'Đề thi cuối kỳ Xác suất thống kê năm 2025.',
+                tags: 'đề thi, xác suất', author: 'Phạm Thị Thanh Hương', date: '2026-06-10', stars: 4.6,
+                ratings: 28, downloads: 850,
+                preview: 'Nội dung xem trước: Đề thi Xác suất thống kê - Học kỳ 2 năm 2025. Gồm 5 câu hỏi lý thuyết và 3 bài tập tính toán. Thời gian làm bài: 90 phút.' },
+            { id: 3, title: 'IELTS Writing Band 8+', uni: 'ULIS', faculty: 'Tiếng Anh', subject: 'IELTS Academic',
+                type: 'PPT', desc: 'Chiến thuật viết IELTS band 8+.', tags: 'IELTS, writing',
+                author: 'Trần Thị Bích Ngọc', date: '2026-06-05', stars: 4.9, ratings: 56, downloads: 2400,
+                preview: 'Nội dung xem trước: Slide IELTS Writing - Cấu trúc bài luận Task 2, các dạng câu hỏi thường gặp và chiến thuật viết mở bài hiệu quả.' },
+            { id: 4, title: 'Giáo trình Kinh tế vi mô - UEB', uni: 'UEB', faculty: 'Kinh tế học',
+                subject: 'Kinh tế vi mô', type: 'PDF', desc: 'Giáo trình đầy đủ Kinh tế vi mô.',
+                tags: 'giáo trình, kinh tế', author: 'Lê Văn Hùng', date: '2026-06-02', stars: 4.7, ratings: 35,
+                downloads: 1800,
+                preview: 'Nội dung xem trước: Giáo trình Kinh tế vi mô - Chương 1: Nhập môn kinh tế vi mô. Các khái niệm cơ bản: cung cầu, thị trường, hành vi người tiêu dùng.' },
+            { id: 5, title: 'Luận văn mẫu AI - UET', uni: 'UET', faculty: 'Công nghệ Thông tin',
+                subject: 'Nhập môn AI', type: 'ZIP', desc: 'Luận văn về ứng dụng AI nhận dạng ảnh.',
+                tags: 'AI, luận văn', author: 'Hoàng Văn Đức', date: '2026-05-28', stars: 4.5, ratings: 22,
+                downloads: 540,
+                preview: 'Nội dung xem trước: Luận văn tốt nghiệp - Ứng dụng mạng neural nhận dạng ảnh. Gồm 5 chương với phần mở đầu, tổng quan, phương pháp, thực nghiệm và kết luận.' }
+        ];
 
-// ============================================================
-// ĐÓNG GÓP
-// ============================================================
-function handleContribute(e) {
-    e.preventDefault();
-    if (!currentUser) { showToast('Vui lòng đăng nhập để đóng góp','error'); return; }
+        const defaultUsers = [
+            { name: 'Nguyễn Minh Anh', studentId: '22010001', email: 'anh.nguyen@vnu.edu.vn', uni: 'UET',
+                faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456', contributed: 45 },
+            { name: 'Trần Thị Bích Ngọc', studentId: '22020002', email: 'ngoc.tran@vnu.edu.vn', uni: 'ULIS',
+                faculty: 'Tiếng Anh', cohort: 'K27', password: '123456', contributed: 38 },
+            { name: 'Lê Văn Hùng', studentId: '22030003', email: 'hung.le@vnu.edu.vn', uni: 'UEB',
+                faculty: 'Kinh tế học', cohort: 'K26', password: '123456', contributed: 32 }
+        ];
 
-    const title = document.getElementById('docTitle').value.trim();
-    const uni = document.getElementById('docUni').value;
-    const faculty = document.getElementById('docFaculty').value;
-    const subject = document.getElementById('docSubject').value.trim();
-    const type = document.getElementById('docType').value;
-    const desc = document.getElementById('docDesc').value.trim();
-    const tags = document.getElementById('docTags').value.trim();
+        const defaultReviews = {};
+        defaultDocs.forEach(doc => {
+            defaultReviews[doc.id] = [
+                { user: 'Nguyễn Minh Anh', rating: 5, text: 'Rất hữu ích, cảm ơn bạn!', date: '15/06/2026' },
+                { user: 'Trần Thị Bích Ngọc', rating: 4, text: 'Tài liệu chất lượng tốt.', date: '14/06/2026' }
+            ];
+        });
 
-    if (!title || !uni || !faculty || !subject || !type) {
-        showToast('Vui lòng điền đầy đủ thông tin','error');
-        return;
-    }
+        // ============================================================
+        // KHỞI TẠO LƯU TRỮ
+        // ============================================================
+        function initStorage() {
+            if (!localStorage.getItem('vnu_docs')) localStorage.setItem('vnu_docs', JSON.stringify(defaultDocs));
+            if (!localStorage.getItem('vnu_users')) {
+                // Gộp cả defaultUsers
+                const allUsers = [...defaultUsers, { name: 'Admin Test', studentId: '999999', email: 'admin@vnu.edu.vn',
+                    uni: 'UET', faculty: 'Công nghệ Thông tin', cohort: 'K27', password: '123456',
+                    contributed: 0 }];
+                localStorage.setItem('vnu_users', JSON.stringify(allUsers));
+            }
+            if (!localStorage.getItem('vnu_reviews')) localStorage.setItem('vnu_reviews', JSON.stringify(defaultReviews));
+            if (!localStorage.getItem('vnu_current_user')) localStorage.removeItem('vnu_current_user');
+        }
+        initStorage();
 
-    const newDoc = {
-        id: Date.now(),
-        title,
-        uni,
-        faculty,
-        subject,
-        type,
-        desc: desc || 'Chưa có mô tả',
-        tags: tags || 'chưa phân loại',
-        author: currentUser.name,
-        date: new Date().toISOString().slice(0,10),
-        stars: 0,
-        ratings: 0,
-        downloads: 0,
-        file: 'uploaded_'+Date.now()+'.'+type.toLowerCase()
-    };
-    docs.push(newDoc);
-    localStorage.setItem('vnu_docs', JSON.stringify(docs));
+        // ============================================================
+        // BIẾN TOÀN CỤC
+        // ============================================================
+        let docs = JSON.parse(localStorage.getItem('vnu_docs'));
+        let users = JSON.parse(localStorage.getItem('vnu_users'));
+        let reviews = JSON.parse(localStorage.getItem('vnu_reviews'));
+        let currentUser = JSON.parse(localStorage.getItem('vnu_current_user')) || null;
+        let previewDocId = null;
 
-    currentUser.contributed = (currentUser.contributed||0) + 1;
-    const idx = users.findIndex(u=>u.studentId===currentUser.studentId);
-    if (idx!==-1) {
-        users[idx].contributed = currentUser.contributed;
-        localStorage.setItem('vnu_users', JSON.stringify(users));
-        localStorage.setItem('vnu_current_user', JSON.stringify(currentUser));
-    }
+        // ============================================================
+        // HÀM TIỆN ÍCH
+        // ============================================================
+        function getUniName(code) { return vnuStructure[code]?.name || code; }
 
-    showToast('📤 Gửi tài liệu thành công! Đang chờ kiểm duyệt.','success');
-    resetContributeForm();
-    renderHome();
-    updateNavUI();
-}
+        function getFaculties(code) { return vnuStructure[code]?.faculties || []; }
 
-function resetContributeForm() {
-    document.getElementById('contributeForm').reset();
-    document.getElementById('docFaculty').innerHTML = '<option value="">-- Chọn khoa --</option>';
-}
+        function showToast(msg, type = 'info') {
+            const c = document.getElementById('toastContainer');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.textContent = msg;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.style.opacity = '0';
+                t.style.transform = 'translateX(40px)';
+                t.style.transition = '0.3s';
+                setTimeout(() => t.remove(), 300);
+            }, 3000);
+        }
 
-// ============================================================
-// BẢNG XẾP HẠNG
-// ============================================================
-function renderLeaderboard() {
-    const sorted = [...users].sort((a,b)=>(b.contributed||0)-(a.contributed||0)).slice(0,5);
-    const emojis = ['🥇','🥈','🥉','4️⃣','5️⃣'];
-    const cls = ['gold','silver','bronze','',''];
-    document.getElementById('contributorRank').innerHTML = `
-        <table>
-            <thead><tr><th>Hạng</th><th>Thành viên</th><th>Đơn vị</th><th>Khoa</th><th>Số tài liệu</th></tr></thead>
-            <tbody>
-                ${sorted.map((u,i) => `
-                    <tr>
-                        <td class="rank ${cls[i]||''}">${emojis[i]||(i+1)}</td>
-                        <td><strong>${u.name}</strong></td>
-                        <td>${getUniName(u.uni)}</td>
-                        <td>${u.faculty}</td>
-                        <td>${u.contributed||0}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
+        function formatDate(ds) {
+            const d = new Date(ds);
+            const now = new Date();
+            const diff = Math.floor((now - d) / (1000 * 60 * 60 * 24));
+            if (diff === 0) return 'Hôm nay';
+            if (diff === 1) return 'Hôm qua';
+            if (diff < 7) return diff + ' ngày trước';
+            return diff + ' ngày trước';
+        }
 
-    const subCount = {};
-    docs.forEach(d => { subCount[d.subject] = (subCount[d.subject]||0) + d.downloads; });
-    const topSubs = Object.entries(subCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
-    document.getElementById('subjectRank').innerHTML = `
-        <table>
-            <thead><tr><th>Hạng</th><th>Môn học</th><th>Lượt tải</th></tr></thead>
-            <tbody>
-                ${topSubs.map(([sub,count],i) => `
-                    <tr>
-                        <td class="rank ${cls[i]||''}">${emojis[i]||(i+1)}</td>
-                        <td><strong>${sub}</strong></td>
-                        <td>${formatNumber(count)}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-}
+        function formatNumber(n) {
+            if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+            return n;
+        }
 
-// ============================================================
-// KHỞI CHẠY
-// ============================================================
-updateNavUI();
-renderHome();
-renderLibrary(docs);
-console.log('✅ VNU Tài Liệu 0Đ đã sẵn sàng!');
-console.log(`📚 ${docs.length} tài liệu, 🏛️ ${unitCodes.length} đơn vị, 👥 ${users.length} người dùng`);
-</script>
+        function renderDocCards(list, showPreview = true) {
+            if (!list || list.length === 0) return '<p style="text-align:center;padding:40px;color:#94a3b8;">Không có tài liệu nào.</p>';
+            return list.map(d => `
+                    <div class="doc-card">
+                        <span class="badge ${d.type.toLowerCase()}">${d.type}</span>
+                        <h4>${d.title}</h4>
+                        <div class="meta"><span class="uni">${getUniName(d.uni)}</span> • ${d.faculty}</div>
+                        <div class="meta">${d.subject}</div>
+                        <div class="footer">
+                            <span class="stars">⭐ ${d.stars.toFixed(1)}</span>
+                            <span class="downloads">⬇️ ${formatNumber(d.downloads)}</span>
+                        </div>
+                        <div class="action-row">
+                            <button class="btn btn-primary btn-sm" onclick="openPreview(${d.id})">👁️ Xem trước</button>
+                            <button class="btn btn-success btn-sm" onclick="downloadDoc(${d.id})">📥 Tải</button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        // ============================================================
+        // XEM TRƯỚC TÀI LIỆU
+        // ============================================================
+        function openPreview(id) {
+            const doc = docs.find(d => d.id === id);
+            if (!doc) { showToast('Không tìm thấy tài liệu', 'error'); return; }
+            previewDocId = id;
+
+            const iconMap = { 'PDF': '📄', 'DOC': '📝', 'PPT': '📑', 'ZIP': '📦' };
+
+            document.getElementById('previewTitle').textContent = '📄 ' + doc.title;
+            document.getElementById('previewMeta').textContent = doc.author + ' • ' + doc.date + ' • ' + doc.type;
+            document.getElementById('previewIcon').textContent = iconMap[doc.type] || '📄';
+            document.getElementById('previewInfo').textContent = doc.preview || 'Không có nội dung xem trước.';
+            document.getElementById('previewDownloadBtn').onclick = function() { downloadDoc(id); };
+
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+            previewDocId = null;
+        }
+
+        function downloadFromPreview() {
+            if (previewDocId) downloadDoc(previewDocId);
+            closePreview();
+        }
+
+        // ============================================================
+        // ĐIỀU HƯỚNG
+        // ============================================================
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.add('active');
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
+            const links = document.querySelectorAll('nav a');
+            const map = { home: 0, library: 1, contribute: 2, leaderboard: 3, guidelines: 4 };
+            if (map[pageId] !== undefined && links[map[pageId]]) links[map[pageId]].classList.add('active-link');
+            if (pageId === 'home') renderHome();
+            if (pageId === 'library') renderLibrary(docs);
+            if (pageId === 'leaderboard') renderLeaderboard();
+            updateNavUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // ĐĂNG NHẬP / ĐĂNG KÝ
+        // ============================================================
+        function openModal() { document.getElementById('authModal').classList.add('active');
+            switchAuthTab('login'); }
+
+        function closeModal() { document.getElementById('authModal').classList.remove('active'); }
+        document.getElementById('authModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.modal-tabs button').forEach(b => b.classList.remove('active-tab'));
+            document.querySelectorAll('.modal-form').forEach(f => f.classList.remove('active-form'));
+            if (tab === 'login') {
+                document.querySelector('.modal-tabs button:first-child').classList.add('active-tab');
+                document.getElementById('loginForm').classList.add('active-form');
+            } else {
+                document.querySelector('.modal-tabs button:last-child').classList.add('active-tab');
+                document.getElementById('registerForm').classList.add('active-form');
+            }
+        }
+
+        function populateUnitSelects() {
+            const selects = ['regUniversity', 'filterUni', 'docUni'];
+            selects.forEach(id => {
+                const sel = document.getElementById(id);
+                if (!sel) return;
+                const first = sel.options[0];
+                sel.innerHTML = '';
+                if (first) sel.appendChild(first);
+                unitCodes.forEach(code => {
+                    const opt = document.createElement('option');
+                    opt.value = code;
+                    opt.textContent = getUniName(code);
+                    sel.appendChild(opt);
+                });
+            });
+        }
+        populateUnitSelects();
+
+        document.getElementById('regUniversity').addEventListener('change', function() {
+            const uni = this.value;
+            const sel = document.getElementById('regFaculty');
+            sel.innerHTML = '<option value="">-- Chọn khoa --</option>';
+            if (uni) {
+                getFaculties(uni).forEach(f => {
+                    const opt = document.createElement('option');
+                    opt.value = f;
+                    opt.textContent = f;
+                    sel.appendChild(opt);
+                });
+            }
+        });
+
+        function updateFilterFaculties() {
+            const uni = document.getElementById('filterUni').value;
+            const sel = document.getElementById('filterFaculty');
+            sel.innerHTML = '<option value="">Tất cả</option>';
+            if (uni) {
+                getFaculties(uni).forEach(f => {
+                    const opt = document.createElement('option');
+                    opt.value = f;
+                    opt.textContent = f;
+                    sel.appendChild(opt);
+                });
+            }
+        }
+
+        function updateContributeFaculties() {
+            const uni = document.getElementById('docUni').value;
+            const sel = document.getElementById('docFaculty');
+            sel.innerHTML = '<option value="">-- Chọn khoa --</option>';
+            if (uni) {
+                getFaculties(uni).forEach(f => {
+                    const opt = document.createElement('option');
+                    opt.value = f;
+                    opt.textContent = f;
+                    sel.appendChild(opt);
+                });
+            }
+        }
+
+        // === ĐĂNG KÝ ===
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const sid = document.getElementById('regStudentId').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const uni = document.getElementById('regUniversity').value;
+            const faculty = document.getElementById('regFaculty').value;
+            const cohort = document.getElementById('regCohort').value;
+            const pass = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            const terms = document.getElementById('regTerms').checked;
+
+            if (!name) { showToast('Vui lòng nhập họ tên', 'error'); return; }
+            if (!sid) { showToast('Vui lòng nhập mã sinh viên', 'error'); return; }
+            if (!email) { showToast('Vui lòng nhập email', 'error'); return; }
+            if (!uni) { showToast('Vui lòng chọn đơn vị', 'error'); return; }
+            if (!faculty) { showToast('Vui lòng chọn khoa', 'error'); return; }
+            if (pass.length < 6) { showToast('Mật khẩu phải có ít nhất 6 ký tự', 'error'); return; }
+            if (pass !== confirm) { showToast('Mật khẩu xác nhận không khớp', 'error'); return; }
+            if (!terms) { showToast('Vui lòng đồng ý với điều khoản', 'error'); return; }
+
+            if (users.find(u => u.email === email)) { showToast('Email đã được đăng ký', 'error'); return; }
+            if (users.find(u => u.studentId === sid)) { showToast('Mã sinh viên đã được đăng ký', 'error'); return; }
+
+            const newUser = { name, studentId: sid, email, uni, faculty, cohort, password: pass, contributed: 0 };
+            users.push(newUser);
+            localStorage.setItem('vnu_users', JSON.stringify(users));
+
+            currentUser = newUser;
+            localStorage.setItem('vnu_current_user', JSON.stringify(newUser));
+
+            closeModal();
+            updateNavUI();
+            renderHome();
+            showToast('🎉 Đăng ký thành công! Chào mừng ' + name, 'success');
+        }
+
+        // === ĐĂNG NHẬP ===
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+
+            if (!email) { showToast('Vui lòng nhập email hoặc mã SV', 'error'); return; }
+            if (!pass) { showToast('Vui lòng nhập mật khẩu', 'error'); return; }
+
+            const user = users.find(u => (u.email === email || u.studentId === email) && u.password === pass);
+            if (!user) { showToast('Sai email/mã SV hoặc mật khẩu', 'error'); return; }
+
+            currentUser = user;
+            localStorage.setItem('vnu_current_user', JSON.stringify(user));
+            closeModal();
+            updateNavUI();
+            renderHome();
+            showToast('Chào mừng ' + user.name + '!', 'success');
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            localStorage.removeItem('vnu_current_user');
+            updateNavUI();
+            renderHome();
+            showToast('Đã đăng xuất', 'info');
+        }
+
+        function updateNavUI() {
+            const loginBtn = document.getElementById('navLoginBtn');
+            const profile = document.getElementById('profileMini');
+            const uname = document.getElementById('headerUserName');
+            if (currentUser) {
+                loginBtn.style.display = 'none';
+                profile.classList.add('active');
+                uname.textContent = currentUser.name;
+            } else {
+                loginBtn.style.display = 'inline-block';
+                profile.classList.remove('active');
+            }
+        }
+
+        // ============================================================
+        // TRANG CHỦ
+        // ============================================================
+        function renderHome() {
+            document.getElementById('statDocs').textContent = docs.length;
+            document.getElementById('statUnis').textContent = unitCodes.length;
+            document.getElementById('statUsers').textContent = users.length * 100 + 500;
+
+            const subjectCount = {};
+            docs.forEach(d => { subjectCount[d.subject] = (subjectCount[d.subject] || 0) + 1; });
+            const topSubjects = Object.entries(subjectCount).sort((a, b) => b[1] - a[1]).slice(0, 6);
+            const grid = document.getElementById('subjectGrid');
+            grid.innerHTML = topSubjects.map(([sub, count]) => {
+                const docsInSubject = docs.filter(d => d.subject === sub);
+                const avg = docsInSubject.reduce((s, d) => s + d.stars, 0) / (docsInSubject.length || 1);
+                const uni = docsInSubject[0]?.uni || '';
+                return `<div class="subject-card" onclick="filterBySubject('${sub}')">
+                        ${sub}
+                        <span class="star">⭐ ${avg.toFixed(1)}</span>
+                        <span class="uni-tag">${uni ? getUniName(uni) : ''}</span>
+                    </div>`;
+            }).join('');
+
+            const recent = [...docs].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 4);
+            document.getElementById('homeDocGrid').innerHTML = renderDocCards(recent);
+        }
+
+        function filterBySubject(subject) {
+            showPage('library');
+            document.getElementById('searchKeyword').value = subject;
+            applyFilters();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // KHO TÀI LIỆU
+        // ============================================================
+        function renderLibrary(list) {
+            const grid = document.getElementById('libraryDocGrid');
+            if (!list || list.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;padding:40px;color:#94a3b8;">Không tìm thấy tài liệu nào</p>';
+            } else {
+                grid.innerHTML = renderDocCards(list);
+            }
+        }
+
+        function applyFilters() {
+            const keyword = document.getElementById('searchKeyword').value.toLowerCase().trim();
+            const uni = document.getElementById('filterUni').value;
+            const faculty = document.getElementById('filterFaculty').value;
+            const types = [];
+            document.querySelectorAll('#filterTypeGroup input:checked').forEach(cb => types.push(cb.value));
+
+            let filtered = docs;
+            if (keyword) filtered = filtered.filter(d =>
+                d.title.toLowerCase().includes(keyword) ||
+                d.subject.toLowerCase().includes(keyword) ||
+                d.tags.toLowerCase().includes(keyword)
+            );
+            if (uni) filtered = filtered.filter(d => d.uni === uni);
+            if (faculty) filtered = filtered.filter(d => d.faculty === faculty);
+            if (types.length) filtered = filtered.filter(d => types.includes(d.type));
+
+            renderLibrary(filtered);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchKeyword').value = '';
+            document.getElementById('filterUni').value = '';
+            document.getElementById('filterFaculty').innerHTML = '<option value="">Tất cả</option>';
+            document.querySelectorAll('#filterTypeGroup input').forEach(cb => cb.checked = true);
+            renderLibrary(docs);
+        }
+
+        // ============================================================
+        // CHI TIẾT TÀI LIỆU
+        // ============================================================
+        function showDetail(id) {
+            const doc = docs.find(d => d.id === id);
+            if (!doc) { showToast('Không tìm thấy tài liệu', 'error'); return; }
+            const container = document.getElementById('docDetailContainer');
+            const docReviews = reviews[id] || [];
+
+            container.innerHTML = `
+                    <div class="doc-title">${doc.title}</div>
+                    <div class="doc-meta">
+                        <span>🏛️ ${getUniName(doc.uni)}</span>
+                        <span>📚 ${doc.faculty}</span>
+                        <span>📖 ${doc.subject}</span>
+                        <span>👤 ${doc.author}</span>
+                        <span>📅 ${doc.date}</span>
+                        <span>⬇️ ${doc.downloads} lượt tải</span>
+                    </div>
+                    <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;">
+                        <span style="font-size:20px;font-weight:700;">⭐ ${doc.stars.toFixed(1)}</span>
+                        <span style="color:#64748b;">(${doc.ratings} đánh giá)</span>
+                    </div>
+                    <div class="doc-desc"><strong>📝 Mô tả:</strong> ${doc.desc || 'Chưa có mô tả'}</div>
+                    <div class="doc-actions">
+                        <button class="btn btn-primary btn-sm" onclick="openPreview(${doc.id})">👁️ Xem trước</button>
+                        <button class="btn btn-success" onclick="downloadDoc(${doc.id})">📥 Tải xuống</button>
+                        <button class="btn btn-outline" style="border-color:#d1d9e6;color:#334155;" onclick="showPage('library')">← Quay lại</button>
+                    </div>
+                    <div class="rating-section">
+                        <h4>⭐ Đánh giá tài liệu</h4>
+                        ${currentUser ? `
+                            <div class="star-rating" id="starRating">
+                                ${[1,2,3,4,5].map(i=>`<span class="star" data-val="${i}" onclick="rateDoc(${doc.id},${i})">★</span>`).join('')}
+                            </div>
+                            <div class="form-group"><textarea id="reviewText" placeholder="Nhận xét của bạn..." style="width:100%;padding:10px;border:1px solid #d1d9e6;border-radius:8px;min-height:60px;"></textarea></div>
+                            <button class="btn btn-primary" onclick="submitReview(${doc.id})">📩 Gửi đánh giá</button>
+                        ` : `<p style="color:#64748b;font-size:14px;">Vui lòng <a href="#" onclick="openModal()" style="color:#2d7d9a;font-weight:600;">đăng nhập</a> để đánh giá.</p>`}
+                        <div class="review-list">
+                            ${docReviews.length > 0 ? docReviews.map(r => `
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <span class="name">${r.user}</span>
+                                        <span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+                                        <span>${r.date}</span>
+                                    </div>
+                                    <div class="review-text">${r.text || 'Không có bình luận'}</div>
+                                </div>
+                            `).join('') : '<p style="color:#94a3b8;font-size:13px;padding:10px 0;">Chưa có đánh giá nào.</p>'}
+                        </div>
+                    </div>
+                `;
+            showPage('detail');
+        }
+
+        let tempRating = 0;
+
+        function rateDoc(id, val) {
+            tempRating = val;
+            document.querySelectorAll('#starRating .star').forEach((el, i) => {
+                el.classList.toggle('active', i < val);
+            });
+        }
+
+        function submitReview(docId) {
+            if (!currentUser) { showToast('Vui lòng đăng nhập', 'error'); return; }
+            if (tempRating === 0) { showToast('Chọn số sao bạn muốn đánh giá', 'error'); return; }
+            const text = document.getElementById('reviewText').value.trim();
+
+            if (!reviews[docId]) reviews[docId] = [];
+            reviews[docId].push({
+                user: currentUser.name,
+                rating: tempRating,
+                text: text || 'Người dùng đã đánh giá',
+                date: new Date().toLocaleDateString('vi-VN')
+            });
+            localStorage.setItem('vnu_reviews', JSON.stringify(reviews));
+
+            const doc = docs.find(d => d.id === docId);
+            const allRatings = reviews[docId].map(r => r.rating);
+            const avg = allRatings.reduce((a, b) => a + b, 0) / allRatings.length;
+            doc.stars = Math.round(avg * 10) / 10;
+            doc.ratings = allRatings.length;
+            localStorage.setItem('vnu_docs', JSON.stringify(docs));
+
+            showToast('Cảm ơn bạn đã đánh giá!', 'success');
+            tempRating = 0;
+            showDetail(docId);
+        }
+
+        function downloadDoc(id) {
+            if (!currentUser) { showToast('Vui lòng đăng nhập để tải', 'error'); return; }
+            const doc = docs.find(d => d.id === id);
+            if (!doc) return;
+            doc.downloads += 1;
+            localStorage.setItem('vnu_docs', JSON.stringify(docs));
+            showToast('Đang tải: ' + doc.title, 'success');
+            setTimeout(() => showToast('✅ Đã tải ' + doc.title, 'success'), 1200);
+        }
+
+        // ============================================================
+        // ĐÓNG GÓP
+        // ============================================================
+        function handleContribute(e) {
+            e.preventDefault();
+            if (!currentUser) { showToast('Vui lòng đăng nhập để đóng góp', 'error'); return; }
+
+            const title = document.getElementById('docTitle').value.trim();
+            const uni = document.getElementById('docUni').value;
+            const faculty = document.getElementById('docFaculty').value;
+            const subject = document.getElementById('docSubject').value.trim();
+            const type = document.getElementById('docType').value;
+            const desc = document.getElementById('docDesc').value.trim();
+            const tags = document.getElementById('docTags').value.trim();
+
+            if (!title || !uni || !faculty || !subject || !type) {
+                showToast('Vui lòng điền đầy đủ thông tin', 'error');
+                return;
+            }
+
+            const newDoc = {
+                id: Date.now(),
+                title,
+                uni,
+                faculty,
+                subject,
+                type,
+                desc: desc || 'Chưa có mô tả',
+                tags: tags || 'chưa phân loại',
+                author: currentUser.name,
+                date: new Date().toISOString().slice(0, 10),
+                stars: 0,
+                ratings: 0,
+                downloads: 0,
+                preview: 'Nội dung xem trước: ' + title
+            };
+            docs.push(newDoc);
+            localStorage.setItem('vnu_docs', JSON.stringify(docs));
+
+            currentUser.contributed = (currentUser.contributed || 0) + 1;
+            const idx = users.findIndex(u => u.studentId === currentUser.studentId);
+            if (idx !== -1) {
+                users[idx].contributed = currentUser.contributed;
+                localStorage.setItem('vnu_users', JSON.stringify(users));
+                localStorage.setItem('vnu_current_user', JSON.stringify(currentUser));
+            }
+
+            showToast('📤 Gửi tài liệu thành công! Đang chờ kiểm duyệt.', 'success');
+            resetContributeForm();
+            renderHome();
+            updateNavUI();
+        }
+
+        function resetContributeForm() {
+            document.getElementById('contributeForm').reset();
+            document.getElementById('docFaculty').innerHTML = '<option value="">-- Chọn khoa --</option>';
+        }
+
+        // ============================================================
+        // BẢNG XẾP HẠNG
+        // ============================================================
+        function renderLeaderboard() {
+            const sorted = [...users].sort((a, b) => (b.contributed || 0) - (a.contributed || 0)).slice(0, 5);
+            const emojis = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+            const cls = ['gold', 'silver', 'bronze', '', ''];
+            document.getElementById('contributorRank').innerHTML = `
+                    <table>
+                        <thead><tr><th>Hạng</th><th>Thành viên</th><th>Đơn vị</th><th>Khoa</th><th>Số tài liệu</th></tr></thead>
+                        <tbody>
+                            ${sorted.map((u,i) => `
+                                <tr>
+                                    <td class="rank ${cls[i]||''}">${emojis[i]||(i+1)}</td>
+                                    <td><strong>${u.name}</strong></td>
+                                    <td>${getUniName(u.uni)}</td>
+                                    <td>${u.faculty}</td>
+                                    <td>${u.contributed||0}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+
+            const subCount = {};
+            docs.forEach(d => { subCount[d.subject] = (subCount[d.subject] || 0) + d.downloads; });
+            const topSubs = Object.entries(subCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            document.getElementById('subjectRank').innerHTML = `
+                    <table>
+                        <thead><tr><th>Hạng</th><th>Môn học</th><th>Lượt tải</th></tr></thead>
+                        <tbody>
+                            ${topSubs.map(([sub,count],i) => `
+                                <tr>
+                                    <td class="rank ${cls[i]||''}">${emojis[i]||(i+1)}</td>
+                                    <td><strong>${sub}</strong></td>
+                                    <td>${formatNumber(count)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+        }
+
+        // ============================================================
+        // KHỞI CHẠY
+        // ============================================================
+        updateNavUI();
+        renderHome();
+        renderLibrary(docs);
+        console.log('✅ VNU Tài Liệu 0Đ đã sẵn sàng!');
+        console.log(`📚 ${docs.length} tài liệu, 🏛️ ${unitCodes.length} đơn vị, 👥 ${users.length} người dùng`);
+    </script>
+
 </body>
 </html>
